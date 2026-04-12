@@ -1,6 +1,15 @@
+import FeaturedRooms from "@/components/home/FeaturedRooms";
+import ImageSlider from "@/components/ui/ImageSlider/ImageSlider";
+
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-    </div>
+    <>
+        <section id="hero-section" aria-label="Destaques do hotel">
+          <ImageSlider />
+        </section>
+        <div className="m-auto w-7xl py-5">
+          <FeaturedRooms />
+        </div>
+    </>
   );
 }
