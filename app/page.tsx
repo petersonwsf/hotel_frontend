@@ -1,4 +1,5 @@
 import FeaturedRooms from "@/components/home/FeaturedRooms";
+import Offer from "@/components/home/Offer";
 import ImageSlider from "@/components/ui/ImageSlider/ImageSlider";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
         </section>
         <div className="m-auto w-7xl py-5">
           <FeaturedRooms />
+          <Offer />
         </div>
     </>
   );
