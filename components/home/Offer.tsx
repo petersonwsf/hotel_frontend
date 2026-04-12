@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function Offer() {
     return (
-        <section id="offer" className="my-[2rem]" aria-label="Oferecimento Hotel">
+        <section id="offer" className="my-[4rem]" aria-label="Oferecimento Hotel">
              <h3 className="text-3xl font-semibold font-sans">Lúmen Hotel oferece</h3>
             <div className="flex flex-col my-5">
                 <div className="flex justify-around my-2">
