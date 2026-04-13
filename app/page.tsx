@@ -1,4 +1,6 @@
 import FeaturedRooms from "@/components/home/FeaturedRooms";
+import Gallery from "@/components/home/Gallery";
+import Location from "@/components/home/Location";
 import Offer from "@/components/home/Offer";
 import Reviews from "@/components/home/Reviews";
 import ImageSlider from "@/components/ui/ImageSlider/ImageSlider";
@@ -13,6 +15,8 @@ export default function Home() {
           <FeaturedRooms />
           <Offer />
           <Reviews />
+          <Gallery />
+          <Location />
         </div>
     </>
   );

@@ -9,7 +9,7 @@ import 'swiper/css/free-mode';
 export default function Reviews() {
     return (
         <section id="" className="my-[4rem]" aria-label="Avaliações do hotel">
-            <div className="my-5">
+            <div className="my-5 pointer-events-none">
                 <Swiper
                     modules={[Autoplay, FreeMode]}
                     slidesPerView={3}
@@ -27,7 +27,7 @@ export default function Reviews() {
                 >
                     {Array.from({ length: 10 }).map((_, index) => (
                         <SwiperSlide key={index}>
-                            <Review count={index}/>
+                            <Review />
                         </SwiperSlide>
                     ))}
                 </Swiper>
