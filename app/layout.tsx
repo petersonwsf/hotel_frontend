@@ -1,7 +1,12 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
+import Header from "@/components/layout/Header/Header";
+import Footer from "@/components/layout/Footer/Footer";
+
+export const metadata : Metadata = {
+  title: "Lúmen Hotel",
+  description: "O melhor hotel boutique para sua estadia inesquecível.",
+}
 
 export default function RootLayout({
   children,
@@ -9,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body>
+    <html className="scroll-smooth" lang="pt-br">
+      <body >
         <Header />
         <main className="min-h-[80vh]">
           {children}
