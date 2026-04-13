@@ -1,23 +1,22 @@
 import FeaturedRooms from "@/components/home/FeaturedRooms";
 import Gallery from "@/components/home/Gallery";
+import HeroSection from "@/components/home/HeroSection";
 import Location from "@/components/home/Location";
 import Offer from "@/components/home/Offer";
 import Reviews from "@/components/home/Reviews";
-import ImageSlider from "@/components/ui/ImageSlider/ImageSlider";
+
 
 export default function Home() {
   return (
     <>
-        <section id="hero-section" aria-label="Destaques do hotel">
-          <ImageSlider />
-        </section>
-        <div className="m-auto w-7xl py-5">
-          <FeaturedRooms />
-          <Offer />
-          <Reviews />
-          <Gallery />
-          <Location />
-        </div>
+      <HeroSection/>
+      <div className="m-auto w-7xl py-5">
+        <FeaturedRooms />
+        <Offer />
+        <Reviews />
+        <Gallery />
+        <Location />
+      </div>
     </>
   );
 }
