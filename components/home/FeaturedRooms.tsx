@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import CardRoom from "../ui/CardRooms";
+import CardRoom from "../ui/CardRoomSlide";
 
 export default function FeaturedRooms() {
     return (

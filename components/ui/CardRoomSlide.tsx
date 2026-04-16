@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function CardRoom() {
+export default function CardRoomSlide() {
     return (
         <div className="w-[300px] h-[250px] rounded-tl-[20px] rounded-br-[20px] border overflow-hidden relative">
             <Image fill  alt="Imagem" src="/images/hotel_model_3.jpg" />
