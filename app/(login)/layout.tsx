@@ -9,7 +9,7 @@ export const metadata : Metadata = {
 export default function LoginLayout({ children } : Readonly<{ children: React.ReactNode}>) {
     return (
         <html lang="pt-br">
-            <body className="flex w-[100vw] h-[100vh] items-center justify-center bg-blue-400">
+            <body className="flex min-h-[100vh] items-center justify-center bg-blue-400">
                 { children }
             </body>
         </html>
