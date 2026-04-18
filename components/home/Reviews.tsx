@@ -8,7 +8,7 @@ import 'swiper/css/free-mode';
 
 export default function Reviews() {
     return (
-        <section id="" className="my-[4rem]" aria-label="Avaliações do hotel">
+        <section id="reviews" className="my-[4rem]" aria-label="Avaliações do hotel">
             <div className="my-5 pointer-events-none">
                 <Swiper
                     modules={[Autoplay, FreeMode]}
