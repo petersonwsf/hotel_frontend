@@ -1,21 +1,12 @@
 "use client";
-import { ContactInformation } from "@/types/ContactInformation";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Formik, Form } from "formik";
 import PersonalDataForm from "./PersonalDataForm";
 import Link from "next/link";
 import ContactInformationForm from "./ContactInformationForm";
 import * as Yup from 'yup'
-
-export interface UserRegister {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    dateOfBirth: string | Date;
-    pin: string;
-    contactInformation: ContactInformation;
-}
+import useAuth from "@/hooks/useAuth";
+import { handleToast } from "@/utils/handleToast";
 
 const eighteenYearsAgo = new Date();
 eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
@@ -45,6 +36,14 @@ export default function FormRegister() {
     
     const [section, setSection] = useState<FormSection>('PERSONAL')
     
+    const { registerClient, stateRegisterClient, isPendingRegisterClient } = useAuth()
+
+    useEffect(() => {
+        if (stateRegisterClient?.erro) {
+            handleToast(stateRegisterClient.erro, 'error')
+        }
+    }, [stateRegisterClient?.erro])
+    
     return (
         <Formik
             initialValues={{
@@ -66,13 +65,13 @@ export default function FormRegister() {
                 }
             }}
             validationSchema={validationSchem}
-            onSubmit={(values : UserRegister) => console.log(values)}
+            onSubmit={registerClient}
         >
             <Form className="w-[80%]">
                 {section === 'PERSONAL'  ? (
                     <PersonalDataForm setSection={setSection} />
                 ) : (
-                    <ContactInformationForm setSection={setSection} />
+                    <ContactInformationForm setSection={setSection} isPending={isPendingRegisterClient} />
                 )}
                 <Link href="/login" className="text-[#002BB3] my-2">Já possui conta? Faça login</Link>
             </Form>

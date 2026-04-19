@@ -14,14 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="scroll-smooth" lang="pt-br">
-      <body >
-        <Header />
-        <main className="min-h-[80vh]">
-          {children}
-        </main>
-        <Footer />
-      </body>
-    </html>
+    <div>
+      <Header />
+      <main className="min-h-[80vh]">
+        {children}
+      </main>
+      <Footer />
+    </div>
   );
 }

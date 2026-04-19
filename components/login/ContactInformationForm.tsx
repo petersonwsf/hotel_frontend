@@ -8,9 +8,10 @@ import { IoIosArrowBack } from "react-icons/io";
 
 interface ContactInformationFormProps {
     setSection: (value: FormSection) => void;
+    isPending: boolean;
 }
 
-export default function ContactInformationForm({ setSection } : ContactInformationFormProps) {
+export default function ContactInformationForm({ setSection, isPending } : ContactInformationFormProps) {
 
     const { values, setFieldValue, errors, touched } = useFormikContext<UserRegister>()
 
@@ -94,7 +95,7 @@ export default function ContactInformationForm({ setSection } : ContactInformati
                 </div>
             </div>
             <div className="flex justify-center mb-[2rem] mt-[1rem]">
-                <button type="submit" className="bg-[#002BB3] py-2 px-4 rounded-[5px] text-white cursor-pointer" style={{ opacity: hasError ? '0.5' : undefined }} disabled={hasError}>Registrar</button>
+                <button type="submit" className="bg-[#002BB3] py-2 px-4 rounded-[5px] text-white cursor-pointer" style={{ opacity: hasError || isPending ? '0.5' : undefined }} disabled={hasError || isPending}>{isPending ? 'Aguardde' : 'Registrar'}</button>
             </div>
         </div>
     )
