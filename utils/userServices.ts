@@ -20,7 +20,7 @@ export async function getUser() {
             },
             success: true
         }
-    } catch (error) {
+    } catch (error : any) {
         if (error.code === 'ERR_JWT_EXPIRED') return { user: null , success : false }
         throw error;
     }
