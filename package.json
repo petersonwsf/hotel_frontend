@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "axios": "^1.15.0",
+    "events": "^3.3.0",
     "formik": "^2.4.9",
+    "jose": "^6.2.2",
     "next": "16.2.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",

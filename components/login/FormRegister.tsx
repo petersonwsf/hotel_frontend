@@ -1,21 +1,11 @@
 "use client";
-import { ContactInformation } from "@/types/ContactInformation";
+import { UserRegister } from "@/types/UserRegister";
 import { useState } from "react"
 import { Formik, Form } from "formik";
 import PersonalDataForm from "./PersonalDataForm";
 import Link from "next/link";
 import ContactInformationForm from "./ContactInformationForm";
 import * as Yup from 'yup'
-
-export interface UserRegister {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    dateOfBirth: string | Date;
-    pin: string;
-    contactInformation: ContactInformation;
-}
 
 const eighteenYearsAgo = new Date();
 eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);

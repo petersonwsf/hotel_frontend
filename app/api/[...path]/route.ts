@@ -5,8 +5,6 @@ async function handleRequest(req: NextRequest, pathSegments: string[]) {
     const service = pathSegments[0]
     const remainingPath = pathSegments.slice(1).join('/')
 
-    console.log(service, remainingPath)
-
     const baseUrl = service === 'hotel' ? 
         process.env.URL_API_HOTEL : service === 'payment' ?
         process.env.URL_API_PAYMENT : null;
