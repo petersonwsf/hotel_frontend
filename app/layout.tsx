@@ -10,7 +10,7 @@ export default async function LoginLayout({ children } : Readonly<{ children: Re
 
     return (
         <html lang="pt-br">
-            <body>
+            <body className="bg-gray-300">
                 <Toast />
                 <AuthProvider user={user?.success ? user.user : null}>
                     { children }

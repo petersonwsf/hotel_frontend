@@ -32,7 +32,7 @@ export default function Pagination({ page, totalPages } : PaginationProps) {
     }
 
     return (
-        <div className="flex w-full justify-center mt-3 items-center gap-2">
+        <div className="flex mt-3 items-center gap-2">
             <button className="p-2 text-white bg-[#002BB3] cursor-pointer rounded-[5px]"><IoIosArrowBack /></button>
             {page > 1 && (
                 <>
