@@ -1,9 +1,13 @@
-import FeaturedRooms from "@/components/home/FeaturedRooms";
-import Gallery from "@/components/home/Gallery";
+import FeaturedRooms from "@/components/home/FeaturedRooms/FeaturedRooms";
+import Gallery from "@/components/home/Gallery/Gallery";
 import HeroSection from "@/components/home/HeroSection";
 import Location from "@/components/home/Location";
 import Offer from "@/components/home/Offer";
-import Reviews from "@/components/home/Reviews";
+import Reviews from "@/components/home/Reviews/Reviews";
+import LoadingFeaturedRooms from "./loadingFeaturedRooms";
+import LoadingReviews from "./loadingReviews";
+import LoadingGallery from "./loadingGallery";
+import { Suspense } from "react";
 
 
 export default function Home() {
@@ -11,10 +15,16 @@ export default function Home() {
     <>
       <HeroSection/>
       <div className="m-auto w-7xl py-5">
-        <FeaturedRooms />
+        <Suspense fallback={<LoadingFeaturedRooms />}>
+          <FeaturedRooms />
+        </Suspense>
         <Offer />
-        <Reviews />
-        <Gallery />
+        <Suspense fallback={<LoadingReviews />}>
+          <Reviews />
+        </Suspense>
+        <Suspense fallback={<LoadingGallery />}>
+          <Gallery />
+        </Suspense>
         <Location />
       </div>
     </>

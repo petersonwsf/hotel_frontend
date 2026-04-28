@@ -8,7 +8,9 @@ export default function RoomsList() {
             {Array.from({ length: 10 }).map((_, index) => (
                 <CardRoom key={index} />
             ))}
-            <Pagination page={10} totalPages={20}/>
+            <div className="flex justify-center my-2">
+                <Pagination page={10} totalPages={20}/>
+            </div>
         </div>
     )
 }

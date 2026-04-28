@@ -20,7 +20,7 @@ export default function Header() {
                 <div>
                     <ul className='flex [&>*]:flex [&>*]:items-center [&>*]:gap-1 items-center gap-5'>
                         <li>Início</li>
-                        <li>Quartos</li>
+                        <li><Link href="/rooms">Quartos</Link></li>
                         <li>
                             <Link href="/#location"
                                 onClick={(e) => {
