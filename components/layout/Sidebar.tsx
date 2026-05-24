@@ -22,11 +22,11 @@ export default function Sidebar() {
             <div className="flex flex-col justify-between h-full">
                 <nav className="py-[2rem]">
                     <ul className=" gap-4 [&>*]:flex [&>*]:items-center [&>*]:gap-1 text-white">
-                        <li className="my-4 border-b-1 border-gray-400 pb-2"><HiUserGroup className="text-white w-5 h-5"/> Usuários</li>
-                        <li className="my-4 border-b-1 border-gray-400 pb-2"><BsHouses className="text-white w-5 h-5" /> Tipos de quartos</li>
-                        <li className="my-4 border-b-1 border-gray-400 pb-2"><LiaWarehouseSolid className="text-white w-5 h-5" /> Quartos</li>
-                        <li className="my-4 border-b-1 border-gray-400 pb-2"><FaKey className="text-white w-5 h-5" /> Reservas</li>
-                        <li className="my-4"><MdAnalytics className="text-white w-5 h-5" /> Dashboard</li>
+                        <li className="my-4 border-b-1 border-gray-400 pb-2 cursor-pointer"><HiUserGroup className="text-white w-5 h-5"/> Usuários</li>
+                        <li className="my-4 border-b-1 border-gray-400 pb-2 cursor-pointer"><BsHouses className="text-white w-5 h-5" /> Tipos de quartos</li>
+                        <li className="my-4 border-b-1 border-gray-400 pb-2 cursor-pointer"><LiaWarehouseSolid className="text-white w-5 h-5" /> Quartos</li>
+                        <li className="my-4 border-b-1 border-gray-400 pb-2 cursor-pointer"><FaKey className="text-white w-5 h-5" /> Reservas</li>
+                        <li className="my-4 cursor-pointer"><MdAnalytics className="text-white w-5 h-5" /> Dashboard</li>
                     </ul>
                 </nav>
                 <div className="border-t-1 border-gray-400 pt-3">

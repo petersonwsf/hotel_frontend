@@ -25,3 +25,9 @@ export async function getUser() {
         throw error;
     }
 }
+
+export async function getJwt() {
+    const cookiesStore = await cookies()
+    const token = cookiesStore.get("token")?.value
+    return token ?? null
+}

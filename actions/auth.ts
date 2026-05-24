@@ -8,7 +8,7 @@ import { UserRegister } from "@/types/UserRegister";
 
 export async function loginAction(prevState: unknown, data: {login: string, password: string}) {
     try {
-        const response = await apiServer.post("/hotel/login", data)
+        const response = await apiServer.post("/hotel/user/login", data)
         
         const { token } = response.data
 
@@ -27,7 +27,7 @@ export async function loginAction(prevState: unknown, data: {login: string, pass
         if (payload.role === 'CLIENT') {
             redirect('/')
         } else {
-            redirect('/admin')
+            redirect('/admin/users')
         }
     } catch (error : any) {
         if (isRedirectError(error)) throw error

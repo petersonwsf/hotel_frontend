@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: '/api',
+    baseURL: '/api/proxy',
 })
 
 export const apiServer = axios.create({

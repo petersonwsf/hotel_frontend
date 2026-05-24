@@ -1,0 +1,1 @@
+export type RoomCategory = 'STD' | 'SUP' | 'DLX' | 'STE' | 'STJ' | 'PRM' | 'PST'
