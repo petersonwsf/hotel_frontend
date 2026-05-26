@@ -18,8 +18,6 @@ async function handler(req: NextRequest) {
     const search = req.nextUrl.search
     const baseUrl = SERVICES[service]
 
-    console.log({path, service, baseUrl})
-
     if (!baseUrl) {
         return NextResponse.json({ erro: `Serviço "${service}" não encontrado` }, { status: 404 })
     }

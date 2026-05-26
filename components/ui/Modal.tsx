@@ -23,7 +23,7 @@ export default function Modal({ isOpen, onClose, title, children, size = "md" } 
                     <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
                     <button 
                         onClick={onClose} 
-                        className="text-gray-400 hover:text-gray-600 rounded-lg p-1.5 hover:bg-gray-100 transition-colors"
+                        className="text-gray-400 hover:text-gray-600 rounded-lg p-1.5 hover:bg-gray-100 transition-colors cursor-pointer"
                     >
                         <IoCloseOutline className="w-[25px] h-[25px]"/>
                     </button>

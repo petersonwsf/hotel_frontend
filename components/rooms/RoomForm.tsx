@@ -3,15 +3,13 @@ import { Formik, Form } from "formik"
 import * as Yup from 'yup'
 import InputText from "../form/InputText"
 import InputSelect from "../form/InputSelect"
-import { RoomCategory } from "@/types/RoomCategory"
 import InputCurrency from "../form/InputCurrency"
 import Textarea from "../form/Textarea"
 import InputUpload from "../form/InputUpload"
 import Image from "next/image"
 import { GoXCircleFill } from "react-icons/go";
 import { useState } from "react"
-import useRooms from "@/hooks/useRooms"
-import { handleToast } from "@/utils/handleToast"
+import { optionsFloor, optionsCategory, optionsStatus } from "@/types/Room.types"
 
 const validationSchema = Yup.object({
     code: Yup.string().required("Código é obrigatório"),
@@ -26,74 +24,20 @@ const validationSchema = Yup.object({
 
 })
 
-const optionsFloor = [
-    {label: 'Térreo', value: 'TERREO'},
-    {label: '1° Andar', value: '1_ANDAR'},
-    {label: '2° Andar', value: '2_ANDAR'},
-    {label: '3° Andar', value: '3_ANDAR'}
-]
+interface RoomFormProps {
+    submit: (values: any) => void;
+}
 
-const optionsStatus = [
-    {label : "Disponível", value: "AVAILABLE"},
-    {label : "Fora de ordem", value: "OUT_OF_ORDER"}
-]
-
-const optionsCategory : { value: RoomCategory, label: string }[] = [
-    {value: 'DLX', label: 'Deluxe'},
-    {value: 'PRM', label: 'Premium'},
-    {value: 'PST', label: 'Suíte Presidencial'},
-    {value: 'STD', label: 'Padrão'},
-    {value: 'STE', label: 'Suíte'},
-    {value: 'STJ', label: 'Suíte Júnior'},
-    {value: 'SUP', label: 'Superior'},
-]
-
-export default function CreateRoomForm() {
+export default function RoomForm({ submit } : RoomFormProps) {
 
     const [imageSelected, setImageSelected] = useState<number>(0)
-
-    const { createRoom } = useRooms()
-
-    async function createRoomSubmit(values: any) {
-        const formData = new FormData()
-
-        const roomDataDto = {
-            code: values.code,
-            floor: values.floor,
-            status: values.status,
-            category: values.category,
-            customPrice: Number(values.customPrice),
-            capacity: Number(values.capacity),
-            bedconfig: values.bedconfig,
-            amenities: values.amenities
-        }
-
-        const roomDataBlob = new Blob([JSON.stringify(roomDataDto)], {
-            type: 'application/json'
-        })
-
-        formData.append("room_data", roomDataBlob)
-        
-        values.images.forEach((file: File) => {
-            formData.append("images", file)
-        })
-
-        try {
-            const room = await createRoom(formData)
-            handleToast('Quarto criado com sucesso!', 'success')
-            console.log(room)
-        } catch (err: any) {
-            console.log(err.response)
-            handleToast('Erro ao salvar quarto novo', 'error')
-        }
-    }
 
     return (
         <div className="my-[1rem]">
             <Formik
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
-                    createRoomSubmit(values)
+                    submit(values)
                 }}
                 initialValues={{
                     code: '',

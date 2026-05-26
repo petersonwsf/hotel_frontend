@@ -1,16 +1,32 @@
+"use client"
+import { Room } from "@/types/Room.types";
 import CardRoom from "../ui/CardRoom";
-import Pagination from "../ui/Pagination";
+import { useState } from "react";
 
-export default function RoomsList() {
+interface RoomsListProps {
+    widthCard: string;
+    rooms: Room[];
+}
+
+export default function RoomsList({ widthCard, rooms }: RoomsListProps) {
+
+    const [openModal, setOpenModal] = useState<boolean>(false)
+    const [idSelected, setIdSelected] = useState<number | null>(null)
+
+    function closeModal() {
+        setOpenModal(false)
+        setIdSelected(null)
+    }
+
+    function handleOpenModal() {
+        setOpenModal(true)
+    }
+
     return (
-        <div className="w-[70%]">
-            <h2 className="font-semibold text-3xl">Quartos</h2>
-            {Array.from({ length: 10 }).map((_, index) => (
-                <CardRoom key={index} />
+        <div className="w-full flex flex-wrap gap-4">
+            {rooms.map(room => (
+                <CardRoom key={room.id} width={widthCard} room={room} buttonFunction={handleOpenModal}/>
             ))}
-            <div className="flex justify-center my-2">
-                <Pagination page={10} totalPages={20}/>
-            </div>
         </div>
     )
 }

@@ -1,16 +1,26 @@
 "use server";
 import { cookies } from "next/headers";
-import { apiServer } from "@/lib/api/api";
 import { jwtVerify } from "jose";
 import { redirect } from "next/navigation";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { UserRegister } from "@/types/UserRegister";
 
+const URL_API_HOTEL = process.env.URL_API_HOTEL
+
 export async function loginAction(prevState: unknown, data: {login: string, password: string}) {
     try {
-        const response = await apiServer.post("/hotel/user/login", data)
-        
-        const { token } = response.data
+        const response = await fetch(`${URL_API_HOTEL}/user/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+
+        if (!response.ok) {
+            const err = await response.json()
+            return { erro: err.message }
+        }
+
+        const { token } = await response.json()
 
         const cookiesStore = await cookies()
         cookiesStore.set("token", token, {
@@ -43,9 +53,18 @@ export async function logoutAction(prevState: unknown) {
 
 export async function registerClientUser(prevState: unknown, data: UserRegister) {
     try {
-        const response = await apiServer.post("/hotel/client", data)
+        const response = await fetch(`${URL_API_HOTEL}/client`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
 
-        const { token } = response.data
+        if (!response.ok) {
+            const err = await response.json()
+            return { erro: err.message }
+        }
+
+        const { token } = await response.json()
 
         const cookiesStore = await cookies()
         cookiesStore.set('token', token, {
