@@ -43,8 +43,7 @@ export default function RoomHeader() {
                 console.log(room)
                 setOpenModal(false)
             } catch (err: any) {
-                console.log(err.response)
-                handleToast('Erro ao salvar quarto novo', 'error')
+                handleToast(err.response.data.message, 'error')
             }
         }
 

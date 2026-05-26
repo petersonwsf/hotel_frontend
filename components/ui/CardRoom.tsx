@@ -22,7 +22,7 @@ export default function CardRoom({ width, room, buttonFunction }: CardRoom) {
                     <p className="font-light">Categoria: {room.category}</p>
                 </div>
                 <div className="flex items-end justify-end w-full">
-                    <button className="bg-[#002BB3] py-1 px-4 rounded-[5px] text-white" onClick={buttonFunction}>Ver detalhes</button>
+                    <button className="bg-[#002BB3] py-1 px-4 rounded-[5px] text-white cursor-pointer" onClick={buttonFunction}>Ver detalhes</button>
                 </div>
             </div>
         </div>

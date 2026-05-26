@@ -9,8 +9,6 @@ export async function getRooms(params: RoomQueryParams) {
         const res = await api.get(`${URL}/room`, { params })
         return res.data
     } catch (err : any) {
-        console.log(err)
-        console.log(err.response)
-        handleToast('Erro ao recuperar quartos', 'error')
+        handleToast(error.response.data.message, 'error')
     }
 }

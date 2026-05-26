@@ -22,7 +22,7 @@ export interface Room {
     customPrice: number;
     floor: string;
     id: number;
-    statusRoom: StatusRoom;
+    status: StatusRoom;
     images?: {
         id: number;
         url: string;
@@ -30,7 +30,7 @@ export interface Room {
         fileSize: number;
         contentType: string;
         createdAt?: string;
-    };
+    }[];
 }
 
 export const optionsFloor = [
