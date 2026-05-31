@@ -4,7 +4,7 @@ import Toast from "@/components/ui/Toast";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { getUser } from "@/utils/userServices";
 
-export default async function LoginLayout({ children } : Readonly<{ children: React.ReactNode}>) {
+export default async function Layout({ children } : Readonly<{ children: React.ReactNode}>) {
 
     const user = await getUser()
 
