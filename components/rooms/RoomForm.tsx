@@ -44,7 +44,7 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
     useEffect(() => {
         const fetch = async () => {
             setLoading(true)
-            const roomResponse = await getRoomById(id);
+            const roomResponse = await getRoomById(id!);
             setRoom(roomResponse)
             setExistingImages(roomResponse.images)
             setLoading(false)

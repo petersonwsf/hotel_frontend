@@ -26,8 +26,18 @@ export default function useRooms() {
         }
     }
 
+    async function getRoomById(id: number) {
+        try {
+            const room = await api.get(`hotel/room/${id}`)
+            return room.data
+        } catch (err : any) {
+            handleToast(err.response.data.message, 'error')
+        }
+    }
+
     return {
         createRoom,
-        editRoom
+        editRoom,
+        getRoomById
     }
 }

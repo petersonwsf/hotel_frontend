@@ -2,8 +2,17 @@
 import { useState } from "react";
 import { Room } from "@/types/Room.types";
 
+type SingleImage = {
+    id: number;
+    url: string;
+    originalName: string;
+    fileSize: number;
+    contentType: string;
+    createdAt?: string;
+};
+
 interface RoomImagesProps {
-    images: Room['images']
+    images: SingleImage[];
 }
 
 export default function RoomImages({ images }: RoomImagesProps) {

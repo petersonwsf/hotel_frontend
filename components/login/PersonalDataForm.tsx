@@ -1,6 +1,7 @@
 "use client";
 import { Field, useFormikContext, ErrorMessage } from "formik";
-import { FormSection, UserRegister } from "./FormRegister";
+import { FormSection } from "./FormRegister";
+import { UserRegister } from "@/types/User.types";
 import { useMemo } from "react";
 
 interface PersonalDataFormProps {

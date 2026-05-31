@@ -23,14 +23,21 @@ export interface Room {
     floor: string;
     id: number;
     status: StatusRoom;
-    images?: {
+    images: {
         id: number;
         url: string;
         originalName: string;
         fileSize: number;
         contentType: string;
         createdAt?: string;
-    }[];
+    }[] | {
+        id: number;
+        url: string;
+        originalName: string;
+        fileSize: number;
+        contentType: string;
+        createdAt?: string;
+    };
 }
 
 export const optionsFloor = [

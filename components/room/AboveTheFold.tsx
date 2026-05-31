@@ -11,7 +11,7 @@ export default function AboveTheFold({ room }: AboveTheFoldProps) {
 
     return (
         <section className="flex w-full gap-3 items-start">
-            <RoomImages images={room.images} />
+            <RoomImages images={Array.isArray(room.images) ? room.images : [room.images]} />
             <div className="w-full px-3">
                 <RoomInfo room={room} />
                 <ReservationRoomArea room={room} />

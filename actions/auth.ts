@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { redirect } from "next/navigation";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { UserRegister } from "@/types/UserRegister";
+import { UserRegister } from "@/types/User.types";
 
 const URL_API_HOTEL = process.env.URL_API_HOTEL
 

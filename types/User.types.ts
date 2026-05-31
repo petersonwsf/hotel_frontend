@@ -1,3 +1,5 @@
+import { ContactInformation } from "./ContactInformation";
+
 export type Role = "ADMIN" | "ATTENDANT" | "CLIENT"
 
 export interface User {
@@ -16,4 +18,14 @@ export interface UserQueryParamsFilter {
     role?: Role;
     phoneNumber?: string;
     deleted?: boolean;
+}
+
+export interface UserRegister {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    dateOfBirth: string | Date;
+    pin: string;
+    contactInformation: ContactInformation;
 }

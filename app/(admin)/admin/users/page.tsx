@@ -4,6 +4,7 @@ import { listUsers } from "@/lib/api/user";
 import Table from "@/components/ui/Table";
 import { Suspense } from "react";
 import LoadingUsersTable from "./LoadingTableUsers";
+import { User } from "@/types/User.types";
 
 export default async function Users() {
 
@@ -17,7 +18,7 @@ export default async function Users() {
             </div>
             <div className="w-full mt-[2rem] rounded-[10px] border-1 border-gray-100 shadow-2xl">
                 <Suspense fallback={<LoadingUsersTable />}>
-                    <Table columns={["ID", "Nome", "Login", "Telefone", "Papel", "Ações"]} data={users.content.map((user) => ({ ...user, actions: null }))} />
+                    <Table columns={["ID", "Nome", "Login", "Telefone", "Papel", "Ações"]} data={users.content.map((user : User) => ({ ...user, actions: null }))} />
                 </Suspense>
                 <div className="flex w-full justify-between py-[1rem] px-[1rem]">
                     <div className="w-full flex items-center gap-2">

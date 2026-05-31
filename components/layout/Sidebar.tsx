@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { HiUserGroup } from "react-icons/hi2";
 import { LiaWarehouseSolid } from "react-icons/lia";
-import { BsHouses } from "react-icons/bs";
 import { FaKey } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import Link from "next/link";

@@ -6,6 +6,7 @@ import { getRooms } from "@/lib/api/rooms";
 export default async function Rooms() {
 
     const rooms = await getRooms({page: 0, size: 10, sort: 'id,desc'})
+    console.log(rooms)
 
     return (
         <div>
