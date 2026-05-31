@@ -1,10 +1,14 @@
 "use client";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import CardRoom from "../../ui/CardRoomSlide";
+import { Room } from "@/types/Room.types";
 
-export default function FeaturedRoomsSlide() {
+interface FeaturedRoomsSlideProps {
+    rooms: Room[]
+}
+
+export default function FeaturedRoomsSlide({ rooms } : FeaturedRoomsSlideProps) {
     return (
         <Swiper
             modules={[Navigation, Pagination]}
@@ -14,9 +18,9 @@ export default function FeaturedRoomsSlide() {
             loop
             centeredSlides={true}
         >
-            {Array.from({ length: 10 }).map((_, index) => (
-                <SwiperSlide key={index}>
-                    <CardRoom />
+            {rooms.map((room) => (
+                <SwiperSlide key={room.id}>
+                    <CardRoom room={room}/>
                 </SwiperSlide>
             ))}
         </Swiper>

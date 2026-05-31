@@ -1,18 +1,25 @@
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
+import { Room } from "@/types/Room.types";
 
+interface ReservationRoomAreaProps {
+    room: Room;
+}
 
-export default function ReservationRoomArea() {
+export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) {
 
-    const error = true;
+    const error = false;
 
     return (
         <div className="mt-5">
             <div className="flex justify-between items-center">
                 <div>
                     <p className="text-xl">Valor da diária</p>
-                    <p className="text-xm my-1"><span className="line-through mr-2">R$ 999,00</span> <span className="bg-green-500 rounded-[5px] py-1 px-3 text-xs text-white font-semibold">Abaixou 12%</span></p>
-                    <p className="text-xl">Por <span className="font-semibold">R$ 500,99</span></p>
+                    {/* 
+                        PROMOÇÃO AINDA SERÁ IMPLEMENTADA
+                        <p className="text-xm my-1"><span className="line-through mr-2">R$ 999,00</span> <span className="bg-green-500 rounded-[5px] py-1 px-3 text-xs text-white font-semibold">Abaixou 12%</span></p> 
+                    */}
+                    <p className="text-xl">Por <span className="font-semibold">{room.customPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></p>
                 </div>
                 <div>
                     <button className="bg-green-600 text-xl rounded-[5px] text-white px-[2rem] py-2">Realizar reserva</button>
