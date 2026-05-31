@@ -35,9 +35,30 @@ export default function useRooms() {
         }
     }
 
+    async function checkAvailability(checkIn: string, checkOut: string, roomId: number) {
+        try {
+            const response = await api.get(`hotel/room/disponibility/${roomId}`, {
+                params: {
+                    checkIn,
+                    checkOut
+                }
+            });
+            return response.data;
+        } catch (err : any) {
+            console.log(err.response.data)
+            let errorMessage = 'Não foi possível verificar a disponibilidade do quarto';
+            if (Array.isArray(err.response.data)) {
+                errorMessage = err.response.data[0].error;
+            }
+            handleToast(errorMessage, 'error');
+            return null;
+        }
+    }
+
     return {
         createRoom,
         editRoom,
-        getRoomById
+        getRoomById,
+        checkAvailability
     }
 }

@@ -3,9 +3,15 @@ import Pagination from "@/components/ui/Pagination";
 import RoomsList from "@/components/rooms/RoomsList";
 import { getRooms } from "@/lib/api/rooms";
 
-export default async function Rooms() {
+interface RoomsProps {
+    searchParams: Promise<{page?: string}>;
+}
 
-    const rooms = await getRooms({ page: 0, size: 10 });
+export default async function Rooms({ searchParams } : RoomsProps) {
+    
+    const resolvedSearchParams = await searchParams;
+    const currentPage = Number(resolvedSearchParams.page) || 1; 
+    const rooms = await getRooms({ page: currentPage - 1, size: 10 });
 
     return (
         <section id="rooms" aria-label="Quartos disponíveis">

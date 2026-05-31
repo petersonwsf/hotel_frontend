@@ -1,4 +1,5 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
 
 interface PaginationProps {
     page: number;
@@ -33,7 +34,11 @@ export default function Pagination({ page, totalPages } : PaginationProps) {
 
     return (
         <div className="flex mt-3 items-center gap-2">
-            <button className={`p-2 text-white rounded-[5px] bg-[#002BB3] ${page === 1 ? 'disabled opacity-[.5]' : 'cursor-pointer'}`} ><IoIosArrowBack /></button>
+            {page === 1 ? (
+                <button className={`p-2 text-white rounded-[5px] bg-[#002BB3] disabled opacity-[.5]`}><IoIosArrowBack /></button>
+            ) : (
+                <Link href={`?page=${page - 1}`} className={`p-2 text-white rounded-[5px] bg-[#002BB3] cursor-pointer`}><IoIosArrowBack /></Link>
+            )}
             {page > 1 && (
                 <>
                     <button className="p-1 px-3  text-[#002BB3] border-[#002BB3] border-2 cursor-pointer rounded-[5px]">1</button>
@@ -49,7 +54,11 @@ export default function Pagination({ page, totalPages } : PaginationProps) {
                     <button className="p-1 px-3  text-[#002BB3] border-[#002BB3] border-2 cursor-pointer rounded-[5px]">{totalPages}</button>
                 </>
             )}
-            <button className={`p-2 text-white rounded-[5px] bg-[#002BB3] ${page === totalPages ? 'disabled opacity-[.5]' : 'cursor-pointer'}`}><IoIosArrowForward /></button>
+            {page === totalPages ? (
+                <button className={`p-2 text-white rounded-[5px] bg-[#002BB3] disabled opacity-[.5]`}><IoIosArrowForward /></button>
+            ) : (
+                <Link href={`?page=${page + 1}`} className={`p-2 text-white rounded-[5px] bg-[#002BB3] cursor-pointer`}><IoIosArrowForward /></Link>
+            )}
         </div>
     )
 }

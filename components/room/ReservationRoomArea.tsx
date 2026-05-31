@@ -1,6 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
 import { Room } from "@/types/Room.types";
+import useRooms from "@/hooks/useRooms";
+import { handleToast } from "@/utils/handleToast";
 
 interface ReservationRoomAreaProps {
     room: Room;
@@ -8,7 +13,25 @@ interface ReservationRoomAreaProps {
 
 export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) {
 
-    const error = false;
+    const [disponibility, setDisponibility] = useState<boolean | null>(null);
+    const [dates, setDates] = useState({
+        startDate: '',
+        endDate: ''
+    });
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const { checkAvailability } = useRooms()
+
+    async function handleCheckDisponibility() {
+        if (!dates.startDate || !dates.endDate) {
+            handleToast('Por favor, selecione as datas de check-in e check-out para verificar a disponibilidade', 'error');
+            return;
+        }
+        setLoading(true);
+        const isAvailable = await checkAvailability(dates.startDate, dates.endDate, room.id);
+        setDisponibility(isAvailable);
+        setLoading(false);
+    }
 
     return (
         <div className="mt-5">
@@ -30,24 +53,28 @@ export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) 
                 <div className="flex">
                     <div className="w-full">
                         <div className="flex gap-2 items-center my-1">
-                            <p>Data de check-in:</p> <input type="date" name="startDate" id="startDate" className="p-3 border-1 border-gray-300 outline-none font-light rounded-[10px] bg-white" />
+                            <p>Data de check-in:</p> <input type="date" name="startDate" id="startDate" onChange={(e) => setDates({...dates, startDate: e.target.value})} className="p-3 border-1 border-gray-300 outline-none font-light rounded-[10px] bg-white" />
                         </div>
                         <div className="flex gap-2 items-center my-1">
-                            <p>Data de check-out:</p> <input type="date" name="endDate" id="endDate" className="p-3 border-1 border-gray-300 outline-none font-light rounded-[10px] bg-white" />
+                            <p>Data de check-out:</p> <input type="date" name="endDate" id="endDate" onChange={(e) => setDates({...dates, endDate: e.target.value})} className="p-3 border-1 border-gray-300 outline-none font-light rounded-[10px] bg-white" />
                         </div>
-                        <button className="bg-[#002BB3] rounded-[5px] text-white px-[2rem] py-2 cursor-pointer mt-1">Verificar</button>
+                        <button className={`bg-[#002BB3] rounded-[5px] text-white px-[2rem] py-2 cursor-pointer mt-1 ${loading && 'opacity-50 cursor-not-allowed'}`} onClick={handleCheckDisponibility} disabled={loading}>
+                            {loading ? 'Verificando...' : 'Verificar'}
+                        </button>
                     </div>
                     <div className="w-[40%] flex items-center justify-center">
-                        {error ? (
-                            <div className="p-[1rem] border-3 rounded-[10px] flex justify-center items-center border-red-500 bg-red-100 flex-col items-center gap-2">
-                                <IoMdCloseCircle fontSize={30} style={{color: 'red'}}/>
-                                <p className="text-red-500 text-xs text-center font-medium">Quarto indisponível no período informado</p>
-                            </div>
-                        ) : (
-                            <div className="p-[1rem] border-3 rounded-[10px] flex justify-center items-center border-green-500 bg-green-100 flex-col items-center gap-2">
-                                <FaCheckCircle fontSize={30} style={{color: 'green'}}/>
-                                <p className="text-green-500 text-xs text-center font-medium">Quarto disponível no período informado</p>
-                            </div>
+                        {disponibility !== null && (
+                            disponibility ? (
+                                <div className="p-[1rem] border-3 rounded-[10px] flex justify-center items-center border-green-500 bg-green-100 flex-col items-center gap-2">
+                                    <FaCheckCircle fontSize={30} style={{color: 'green'}}/>
+                                    <p className="text-green-500 text-xs text-center font-medium">Quarto disponível no período informado</p>
+                                </div>
+                            ) : (
+                                <div className="p-[1rem] border-3 rounded-[10px] flex justify-center items-center border-red-500 bg-red-100 flex-col items-center gap-2">
+                                    <IoMdCloseCircle fontSize={30} style={{color: 'red'}}/>
+                                    <p className="text-red-500 text-xs text-center font-medium">Quarto indisponível no período informado</p>
+                                </div>
+                            )
                         )}
                     </div>
                 </div>
