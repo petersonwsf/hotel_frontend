@@ -8,10 +8,23 @@ interface CardRoom {
 }
 
 export default function CardRoom({ width, room, buttonFunction }: CardRoom) {
+
+    let mainImageUrl = ''
+
+    if (room.images) {
+        if (Array.isArray(room.images)) {
+            if (room.images.length > 0) {
+                mainImageUrl = room.images[0].url
+            }
+        } else {
+            mainImageUrl = room.images.url
+        }
+    }
+
     return (
         <div className={`flex ${width} my-3 p-4 gap-3 bg-gray-50 rounded-[10px]`}>
             <div className="flex items-center justify-center">
-                <img src={room.images?.url ?? `/images/hotel_model.webp`} alt="Image quarto" className="rounded-[20px] w-[200px]" />
+                <img src={mainImageUrl ?? `/images/hotel_model.webp`} alt="Image quarto" className="rounded-[20px] w-[200px]" />
             </div>
             <div className="flex w-full">
                 <div className="w-full">

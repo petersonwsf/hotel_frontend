@@ -1,26 +1,39 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
+import { Room } from "@/types/Room.types";
 
-export default function RoomImages() {
+type SingleImage = {
+    id: number;
+    url: string;
+    originalName: string;
+    fileSize: number;
+    contentType: string;
+    createdAt?: string;
+};
 
-    const [mainImage, setMainImage] = useState<string>('/images/hotel_model_2.webp')
+interface RoomImagesProps {
+    images: SingleImage[];
+}
+
+export default function RoomImages({ images }: RoomImagesProps) {
+
+    const [mainImage, setMainImage] = useState<string>(images[0].url)
 
     function changeMainImage(urlImage: string) {
         setMainImage(urlImage)
     }
 
     return (
-        <div className="w-full flex gap-5">
+        <div className="w-full min-h-[500px] flex gap-5">
             <div className="flex flex-col justify-center gap-[1rem]">
-                {Array.from({ length: 5 }).map((_,index) => (
-                    <div className="p-1 border-2 border-[#fff] rounded-[5px] duration-[0.3s] cursor-pointer hover:border-[#002BB3]" key={index} onClick={() => changeMainImage('/images/hotel_model_2.webp')}>
-                        <Image src="/images/hotel_model.webp" width={100} height={100} alt="Imagem do quarto" />
+                {images && images.map((image, index) => (
+                    <div className="p-1 border-2 border-[#fff] rounded-[5px] duration-[0.3s] cursor-pointer hover:border-[#002BB3]" key={index} onClick={() => changeMainImage(image.url)}>
+                        <img src={image.url} className="w-[100px] max-h-[100px]" alt="Imagem do quarto" />
                     </div>
                 ))}                        
             </div>
             <div className="flex justify-center items-center">
-                <Image width={500} height={0} src={mainImage} alt="Imagem principal" />
+                <img src={mainImage} alt="Imagem principal" className="w-[500px] max-h-[500px]" />
             </div>
         </div>
     )

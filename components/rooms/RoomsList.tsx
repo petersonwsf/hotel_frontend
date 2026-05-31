@@ -6,6 +6,7 @@ import Modal from "../ui/Modal";
 import useRooms from "@/hooks/useRooms";
 import RoomForm from "./RoomForm";
 import { handleToast } from "@/utils/handleToast";
+import { useRouter } from "next/navigation";
 
 type Action = 'REDIRECT' | 'EDIT'
 
@@ -19,6 +20,7 @@ export default function RoomsList({ widthCard, rooms, action }: RoomsListProps) 
 
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [idSelected, setIdSelected] = useState<number | null>(null)
+    const router = useRouter()
 
     const { editRoom } = useRooms()
 
@@ -30,6 +32,10 @@ export default function RoomsList({ widthCard, rooms, action }: RoomsListProps) 
     function handleOpenModal(id: number) {
         setIdSelected(id)
         setOpenModal(true)
+    }
+
+    function redirectToPage(id: number) {
+        router.push(`/room/${id}`)
     }
 
     async function edit(values : any) {
@@ -69,7 +75,7 @@ export default function RoomsList({ widthCard, rooms, action }: RoomsListProps) 
     return (
         <div className="w-full flex flex-wrap gap-4">
             {rooms.map(room => (
-                <CardRoom key={room.id} width={widthCard} room={room} buttonFunction={action == 'EDIT' ? () => handleOpenModal(room.id) : () => console.log("SIIIIII")}/>
+                <CardRoom key={room.id} width={widthCard} room={room} buttonFunction={action == 'EDIT' ? () => handleOpenModal(room.id) : () => redirectToPage(room.id)}/>
             ))}
             <Modal size="4xl" isOpen={openModal} onClose={closeModal} title={`Editar quarto ID: ${idSelected}`}>
                 <RoomForm submit={edit} id={idSelected}/>

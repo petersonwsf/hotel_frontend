@@ -1,15 +1,20 @@
+import { Room } from "@/types/Room.types";
 import ReservationRoomArea from "./ReservationRoomArea";
 import RoomImages from "./RoomImages";
 import RoomInfo from "./RoomInfo";
 
-export default function AboveTheFold() {
+interface AboveTheFoldProps {
+    room: Room;
+}
+
+export default function AboveTheFold({ room }: AboveTheFoldProps) {
 
     return (
         <section className="flex w-full gap-3 items-start">
-            <RoomImages />
+            <RoomImages images={Array.isArray(room.images) ? room.images : [room.images]} />
             <div className="w-full px-3">
-                <RoomInfo />
-                <ReservationRoomArea />
+                <RoomInfo room={room} />
+                <ReservationRoomArea room={room} />
             </div>
         </section>
     )

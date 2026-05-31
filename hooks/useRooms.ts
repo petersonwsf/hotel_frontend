@@ -1,5 +1,4 @@
 import { api } from "@/lib/api/api"
-import { Room } from "@/types/Room.types"
 import { handleToast } from "@/utils/handleToast"
 import { useRouter } from "next/navigation"
 
@@ -17,15 +16,6 @@ export default function useRooms() {
         }
     }
 
-    async function getRoomById(id: number) {
-        try {
-            const room = await api.get(`/hotel/room/${id}`)
-            return room.data
-        } catch (error : any) {
-            handleToast(error.response.data.message, 'error')
-        }
-    }
-
     async function editRoom(id: number, data: FormData) {
         try {
             const room = await api.patch(`/hotel/room/${id}`, data)
@@ -36,9 +26,39 @@ export default function useRooms() {
         }
     }
 
+    async function getRoomById(id: number) {
+        try {
+            const room = await api.get(`hotel/room/${id}`)
+            return room.data
+        } catch (err : any) {
+            handleToast(err.response.data.message, 'error')
+        }
+    }
+
+    async function checkAvailability(checkIn: string, checkOut: string, roomId: number) {
+        try {
+            const response = await api.get(`hotel/room/disponibility/${roomId}`, {
+                params: {
+                    checkIn,
+                    checkOut
+                }
+            });
+            return response.data;
+        } catch (err : any) {
+            console.log(err.response.data)
+            let errorMessage = 'Não foi possível verificar a disponibilidade do quarto';
+            if (Array.isArray(err.response.data)) {
+                errorMessage = err.response.data[0].error;
+            }
+            handleToast(errorMessage, 'error');
+            return null;
+        }
+    }
+
     return {
         createRoom,
         editRoom,
-        getRoomById
+        getRoomById,
+        checkAvailability
     }
 }

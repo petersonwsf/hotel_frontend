@@ -3,9 +3,16 @@ import RoomsList from "@/components/rooms/RoomsList";
 import Pagination from "@/components/ui/Pagination";
 import { getRooms } from "@/lib/api/rooms";
 
-export default async function Rooms() {
+interface RoomsProps {
+    searchParams: Promise<{page?: string}>;
+}
 
-    const rooms = await getRooms({page: 0, size: 10, sort: 'id,desc'})
+export default async function Rooms({ searchParams }: RoomsProps) {
+
+    const resolvedSearchParams = await searchParams;
+    const currentPage = Number(resolvedSearchParams.page) || 1;
+
+    const rooms = await getRooms({page: currentPage - 1, size: 10, sort: 'id,desc'})
 
     return (
         <div>

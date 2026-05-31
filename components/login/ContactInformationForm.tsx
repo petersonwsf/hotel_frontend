@@ -1,6 +1,7 @@
 "use client";
 import { Field, ErrorMessage } from "formik";
-import { FormSection, UserRegister } from "./FormRegister";
+import { FormSection } from "./FormRegister";
+import { UserRegister } from "@/types/User.types";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo } from "react";
 import { getAddress } from "@/services/address";

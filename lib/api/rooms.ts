@@ -9,6 +9,15 @@ export async function getRooms(params: RoomQueryParams) {
         const res = await api.get(`${URL}/room`, { params })
         return res.data
     } catch (err : any) {
-        handleToast(error.response.data.message, 'error')
+        handleToast(err.response.data.message, 'error')
+    }
+}
+
+export async function getRoomById(id: number) {
+    try {
+        const room = await api.get(`${URL}/room/${id}`)
+        return room.data
+    } catch (err : any) {
+        handleToast(err.response.data.message, 'error')
     }
 }
