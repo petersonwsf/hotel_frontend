@@ -6,6 +6,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Room } from "@/types/Room.types";
 import useRooms from "@/hooks/useRooms";
 import { handleToast } from "@/utils/handleToast";
+import { useRouter } from "next/navigation";
 
 interface ReservationRoomAreaProps {
     room: Room;
@@ -22,6 +23,8 @@ export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) 
 
     const { checkAvailability } = useRooms()
 
+    const router = useRouter()
+
     async function handleCheckDisponibility() {
         if (!dates.startDate || !dates.endDate) {
             handleToast('Por favor, selecione as datas de check-in e check-out para verificar a disponibilidade', 'error');
@@ -31,6 +34,10 @@ export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) 
         const isAvailable = await checkAvailability(dates.startDate, dates.endDate, room.id);
         setDisponibility(isAvailable);
         setLoading(false);
+    }
+
+    function redirectToreservation() {
+        router.push(`/reservation/${room.id}`)
     }
 
     return (
@@ -45,7 +52,7 @@ export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) 
                     <p className="text-xl">Por <span className="font-semibold">{room.customPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></p>
                 </div>
                 <div>
-                    <button className="bg-green-600 text-xl rounded-[5px] text-white px-[2rem] py-2">Realizar reserva</button>
+                    <button onClick={redirectToreservation} className="bg-green-600 text-xl rounded-[5px] text-white px-[2rem] py-2">Realizar reserva</button>
                 </div>
             </div>
             <div className="mt-[2rem] p-[1rem] rounded-[10px] bg-gray-200">
