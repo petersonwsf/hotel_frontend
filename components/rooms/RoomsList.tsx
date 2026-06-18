@@ -1,5 +1,5 @@
 "use client"
-import { Room } from "@/types/Room.types";
+import { RoomList } from "@/types/Room.types";
 import CardRoom from "../ui/CardRoom";
 import { useState } from "react";
 import Modal from "../ui/Modal";
@@ -12,7 +12,7 @@ type Action = 'REDIRECT' | 'EDIT'
 
 interface RoomsListProps {
     widthCard: string;
-    rooms: Room[];
+    rooms: RoomList[];
     action : Action
 }
 

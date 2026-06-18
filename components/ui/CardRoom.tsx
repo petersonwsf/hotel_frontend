@@ -1,9 +1,9 @@
 "use client"
-import { Room } from "@/types/Room.types";
+import { RoomList } from "@/types/Room.types";
 
 interface CardRoom {
     width: string;
-    room: Room,
+    room: RoomList,
     buttonFunction: () => void;
 }
 

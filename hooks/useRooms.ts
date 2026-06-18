@@ -45,7 +45,6 @@ export default function useRooms() {
             });
             return response.data;
         } catch (err : any) {
-            console.log(err.response.data)
             let errorMessage = 'Não foi possível verificar a disponibilidade do quarto';
             if (Array.isArray(err.response.data)) {
                 errorMessage = err.response.data[0].error;

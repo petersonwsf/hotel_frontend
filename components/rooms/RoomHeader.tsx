@@ -24,7 +24,8 @@ export default function RoomHeader() {
                 customPrice: Number(values.customPrice),
                 capacity: Number(values.capacity),
                 bedconfig: values.bedconfig,
-                amenities: values.amenities
+                amenities: values.amenities,
+                description: values.description,
             }
     
             const roomDataBlob = new Blob([JSON.stringify(roomDataDto)], {

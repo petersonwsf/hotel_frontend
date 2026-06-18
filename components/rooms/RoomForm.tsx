@@ -1,5 +1,5 @@
 "use client"
-import { Formik, Form } from "formik"
+import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from 'yup'
 import InputText from "../form/InputText"
 import InputSelect from "../form/InputSelect"
@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { optionsFloor, optionsCategory, optionsStatus, Room } from "@/types/Room.types"
 import useRooms from "@/hooks/useRooms"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { COMODIDADES } from "@/types/Room.types"
 
 
 const validationSchema = Yup.object({
@@ -21,8 +22,8 @@ const validationSchema = Yup.object({
     category: Yup.string().required("Selecione uma categoria"),
     customPrice: Yup.number().required("Preço é obrigatório").min(100, "O preço mínimo deve ser R$ 100,00"),
     capacity: Yup.number().required("Informe a capacidade").min(1, "O quarto deve ter capacidade mínima de 1 pessoa"),
-    bedconfig: Yup.string().required("Informe a configuração de cama"),
-    amenities: Yup.string().required("Informe a configuração de cama"),
+    description: Yup.string().required('Descrição é obrigatória'),
+    amenities: Yup.array().of(Yup.string()).min(1, "Informe ao menos uma comodidade").required("Comodidades são obrigatórias"),
     images: Yup.array()
 
 })
@@ -75,7 +76,8 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                         customPrice: room ? room.customPrice : 0,
                         capacity: room ? room.capacity : '',
                         bedconfig: room ? room.bedconfig : '',
-                        amenities: room ? room.amenities : '',
+                        description: room ? room.description : '',
+                        amenities: room ? room.amenities : [],
                         images: []
                     }}
                 >
@@ -114,11 +116,40 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                                     <InputCurrency name="customPrice" placeholder="Preço da diária" label="Preço da diária"/>
                                     <InputText name="capacity" label="Capacidade" type="number" placeholder="Capacidade de pessoas"/>
                                 </div>
-                                <div className="my-[1rem]">
-                                    <InputText name="bedconfig" placeholder="Configuração de camas" label="Configuração de camas" />
+                                <div className="my-[1rem] bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <label className="block text-sm font-semibold text-gray-900 mb-3">
+                                        Comodidades do Quarto
+                                    </label>
+                                    
+                                    {/* Grid para organizar os checkboxes bonitinhos em colunas */}
+                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        {COMODIDADES.map((option) => (
+                                            <label 
+                                                key={option.value} 
+                                                className="flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50/50 transition-colors select-none"
+                                            >
+                                                <Field 
+                                                    type="checkbox" 
+                                                    name="amenities" 
+                                                    value={option.value}
+                                                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                />
+                                                    <span className="text-sm font-medium text-gray-700">
+                                                        {option.label}
+                                                    </span>
+                                            </label>
+                                        ))}
+                                    </div>
+
+                                    {/* Exibição da mensagem de erro se nenhuma for marcada */}
+                                    <ErrorMessage 
+                                        name="amenities" 
+                                        component="span" 
+                                        className="text-red-500 text-xs font-medium mt-2 block"
+                                    />
                                 </div>
                                 <div className="my-[1rem]">
-                                    <Textarea name="amenities" placeholder="Insira as comodidades" label="Comodidades" />
+                                    <Textarea name="description" placeholder="Descreva o quarto" label="Descrição" />
                                 </div>
                                 <div className="my-[1rem]">
                                     <InputUpload name="images" label="Imagens"/>
@@ -127,13 +158,19 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                                     <div className="flex w-full items-start gap-[1rem] flex-wrap">
                                         {existingImages?.map((existingImage, index) => (
                                             <div key={`existing_image_${index}`} className="relative cursor-pointer shadow-blue-300/50 hover:shadow-lg duration-[.3s]" onClick={() => setImageSelected(index)}>
-                                                <GoXCircleFill  className="w-5 h-5 absolute right-[-5px] z-10 top-[-10px] rounded-[50%]" onClick={() => removeExistingImage(existingImage.url)} style={{color: 'red', background: '#fff'}}/>
+                                                <GoXCircleFill  className="w-5 h-5 absolute right-[-5px] z-10 top-[-10px] rounded-[50%]" onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    removeExistingImage(existingImage.url)
+                                                }} style={{color: 'red', background: '#fff'}}/>
                                                 <img src={existingImage.url} alt="Imagens" style={{width: '75px'}} />
                                             </div>
                                         ))}
                                         {(values.images as File[]).map((image, index) => (
                                             <div key={`image_${index}`} className="relative cursor-pointer shadow-blue-300/50 hover:shadow-lg duration-[.3s]" onClick={() => setImageSelected(index)}>
-                                                <GoXCircleFill  className="w-5 h-5 absolute right-[-5px] top-[-10px] rounded-[50%]" onClick={() => removeImage(index)} style={{color: 'red', background: '#fff'}}/>
+                                                <GoXCircleFill  className="w-5 h-5 absolute right-[-5px] top-[-10px] rounded-[50%]" onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    removeImage(index)
+                                                }} style={{color: 'red', background: '#fff'}}/>
                                                 <Image width={75} height={0} src={URL.createObjectURL(image)} alt="Imagens"/>
                                             </div>
                                         ))}
