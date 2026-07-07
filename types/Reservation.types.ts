@@ -22,6 +22,7 @@ export interface Reservation {
     serviceFee: number;
     userId: number;
     status: ReservationStatus;
+    totalAmount: number;
     room: {
         id: number;
         code: string;

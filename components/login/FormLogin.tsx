@@ -1,6 +1,6 @@
 "use client";
 import { Field, ErrorMessage, Formik, Form } from "formik";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as Yup from 'yup'
 import useAuth from "@/hooks/useAuth";
 import { handleToast } from "@/utils/handleToast";
@@ -20,6 +20,8 @@ export default function LoginForm() {
             handleToast(stateLogin.erro, 'error')
         }
     }, [stateLogin?.erro])
+
+    const router = useRouter()
 
     return (
         <Formik
@@ -43,7 +45,7 @@ export default function LoginForm() {
                         <ErrorMessage name="password" component="span" className="text-red-500 text-xs mt-1"/>
                     </div>
                     <p className="text-[#002BB3] my-2">Esqueceu a senha?</p>
-                    <Link href="/register" className="text-[#002BB3] my-2">Não possui conta? Registre-se</Link>
+                    <a onClick={() => router.push("/register")} className="text-[#002BB3] my-2 cursor-pointer">Não possui conta? Registre-se</a>
                     <div className="w-full text-center my-5">
                         <button type="submit" className="bg-[#002BB3] py-2 px-4 rounded-[5px] text-white cursor-pointer" disabled={isPendingLogin} style={{opacity: isPendingLogin ? '0.5' : undefined}}>{isPendingLogin ? 'Aguarde' : 'Login'}</button>
                     </div>

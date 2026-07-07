@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import { Formik, Form } from "formik";
 import PersonalDataForm from "./PersonalDataForm";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ContactInformationForm from "./ContactInformationForm";
 import * as Yup from 'yup'
 import useAuth from "@/hooks/useAuth";
@@ -44,6 +44,8 @@ export default function FormRegister() {
         }
     }, [stateRegisterClient?.erro])
     
+    const router = useRouter()
+
     return (
         <Formik
             initialValues={{
@@ -73,7 +75,7 @@ export default function FormRegister() {
                 ) : (
                     <ContactInformationForm setSection={setSection} isPending={isPendingRegisterClient} />
                 )}
-                <Link href="/login" className="text-[#002BB3] my-2">Já possui conta? Faça login</Link>
+                <a onClick={() => router.push("/login")} className="text-[#002BB3] my-2 cursor-pointer">Já possui conta? Faça login</a>
             </Form>
         </Formik>
     )
