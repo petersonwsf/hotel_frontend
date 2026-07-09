@@ -16,7 +16,8 @@ export async function getUser() {
             user: {
                 id: payload.id,
                 name: payload.name,
-                role: payload.role
+                role: payload.role,
+                login: payload.sub
             },
             success: true
         }

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SERVICES: Record<string, string> = {
     hotel: process.env.URL_API_HOTEL!,
-    pagamentos: process.env.URL_API_PAYMENT!,
+    payment: process.env.URL_API_PAYMENT!,
 }
 
 async function handler(req: NextRequest) {

@@ -20,7 +20,7 @@ export default function PaymentContainer({ reservation } : PaymentContainerProps
 
     const { user } = useAuthContext()
 
-    const [typePayment, setTypePayment] = useState<TypePayment>("CARD")
+    const [typePayment, setTypePayment] = useState<TypePayment>("card")
 
     if (!user) {
         handleToast("Faça login para ter acesso", "error")
@@ -32,9 +32,9 @@ export default function PaymentContainer({ reservation } : PaymentContainerProps
             <div className="w-[70%]">
                 <PaymentHeader typePayment={typePayment} setTypePayment={setTypePayment} />
                 <div className="w-full bg-gray-100 px-[2rem] py-[1rem]">
-                    {typePayment === 'BOLETO' && <PaymentBoleto />}
-                    {typePayment === 'PIX' && <PaymentPix />}
-                    {typePayment === 'CARD' && <PaymentCard />}
+                    {typePayment === 'boleto' && <PaymentBoleto reservation={reservation} />}
+                    {typePayment === 'pix' && <PaymentPix />}
+                    {typePayment === 'card' && <PaymentCard />}
                 </div>
             </div>
             <div className="w-[30%]">
