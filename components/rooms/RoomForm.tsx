@@ -121,7 +121,6 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                                         Comodidades do Quarto
                                     </label>
                                     
-                                    {/* Grid para organizar os checkboxes bonitinhos em colunas */}
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                         {COMODIDADES.map((option) => (
                                             <label 
@@ -141,7 +140,6 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                                         ))}
                                     </div>
 
-                                    {/* Exibição da mensagem de erro se nenhuma for marcada */}
                                     <ErrorMessage 
                                         name="amenities" 
                                         component="span" 

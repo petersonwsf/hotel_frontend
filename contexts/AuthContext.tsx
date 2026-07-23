@@ -2,9 +2,10 @@
 import { createContext, useContext } from "react";
 
 export interface User {
-    id: unknown;
-    name: unknown;
-    role: unknown;
+    id: number;
+    name: string;
+    role: string;
+    login: string;
 }
 
 interface AuthContextType  {
