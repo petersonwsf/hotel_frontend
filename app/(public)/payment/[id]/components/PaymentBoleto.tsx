@@ -1,5 +1,5 @@
 "use client"
-import { useAuthContext } from "@/contexts/AuthContext";
+import { User } from "@/contexts/AuthContext";
 import usePayment from "@/hooks/usePayment";
 import { Payment } from "@/types/Payment.types";
 import { Reservation } from "@/types/Reservation.types";
@@ -13,22 +13,21 @@ import { copyToClipboard } from "@/utils/copyToClipboard";
 
 interface PaymentBoletoProps {
     reservation: Reservation;
+    user: User;
 }
 
-export default function PaymentBoleto({ reservation } : PaymentBoletoProps) {
+export default function PaymentBoleto({ reservation, user } : PaymentBoletoProps) {
 
     const [loading, setLoading] = useState<boolean>(false)
     const [checkTerm, setCheckTerm] = useState<boolean>(false)
     const [payment, setPayment] = useState<Payment | null>(null)
-
-    const { user } = useAuthContext()
 
     const { createPayment } = usePayment()
 
     async function createBoletoPayment() {
         setLoading(true)
         try {
-            const payment = await createPayment({
+            const paymentResponse = await createPayment({
                 amount : reservation.totalAmount,
                 userId: user?.id as number,
                 reservationId: reservation.id,
@@ -36,7 +35,7 @@ export default function PaymentBoleto({ reservation } : PaymentBoletoProps) {
                 currency: 'brl',
                 customerEmail: user?.login ?? '',
             })
-            setPayment(payment.payment)
+            setPayment(paymentResponse.payment)
         } catch (error : any) {
             handleToast(error.response.data.message, 'error')
         } finally {

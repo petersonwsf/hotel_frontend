@@ -32,9 +32,9 @@ export default function PaymentContainer({ reservation } : PaymentContainerProps
             <div className="w-[70%]">
                 <PaymentHeader typePayment={typePayment} setTypePayment={setTypePayment} />
                 <div className="w-full bg-gray-100 px-[2rem] py-[1rem]">
-                    {typePayment === 'boleto' && <PaymentBoleto reservation={reservation} />}
+                    {typePayment === 'boleto' && <PaymentBoleto reservation={reservation} user={user}/>}
                     {typePayment === 'pix' && <PaymentPix />}
-                    {typePayment === 'card' && <PaymentCard />}
+                    {typePayment === 'card' && <PaymentCard reservation={reservation} user={user} />}
                 </div>
             </div>
             <div className="w-[30%]">
