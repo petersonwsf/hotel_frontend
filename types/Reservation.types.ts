@@ -34,6 +34,14 @@ export interface Reservation {
         amenities: string[];
         capacity: number;
         category: RoomCategory;
+        images: {
+            id: number;
+            url: string;
+            originalName: string;
+            fileSize: number;
+            contentType: string;
+            createdAt?: string;
+        }[]; 
     };
     user: {
         id: number;

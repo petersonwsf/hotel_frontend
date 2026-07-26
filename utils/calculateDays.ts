@@ -1,4 +1,4 @@
-export function calcularDiferencaDias(dataInicioStr?: string, dataFimStr?: string): number {
+export function calcularDiferencaDias(dataInicioStr?: string | Date, dataFimStr?: string | Date): number {
     if (!dataInicioStr || !dataFimStr) return 0;
 
     const dataInicio = new Date(dataInicioStr);
