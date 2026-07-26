@@ -4,10 +4,13 @@ import { IoHome } from "react-icons/io5";
 import { GrOverview } from "react-icons/gr";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaBed } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function SidebarUser() {
 
-    const pathname = window.location.pathname.replace('/user', '');
+    const currentPath = usePathname()
+
+    const pathname = currentPath ? currentPath.replace('/user', '') : '';
 
     return (
         <div className="h-full border-r-1 border-gray-300 min-w-[300px] px-[1rem]">
@@ -18,7 +21,7 @@ export default function SidebarUser() {
                 <div className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-normal hover:border-b-[#002179] hover:text-[#002179]`}>
                     <GrOverview /> Início
                 </div>
-                <div className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/reservas' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>
+                <div className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/reservations' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>
                     <FaBed /> Minhas reservas
                 </div>
                 <div className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/dados' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>

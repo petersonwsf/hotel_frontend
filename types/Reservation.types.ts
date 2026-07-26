@@ -3,6 +3,8 @@ import { Role } from "./User.types";
 
 export type ReservationStatus = "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKED_OUT" | "CANCELED" | "NO_SHOW"
 
+export type Filter = 'ACTIVE' | 'COMPLETED' | 'CANCELED'
+
 export interface ReservationSaveDTO {
     checkInDate: Date | string;
     checkOutDate: Date | string;
