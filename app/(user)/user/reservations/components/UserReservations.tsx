@@ -3,12 +3,14 @@ import { Filter, Reservation } from "@/types/Reservation.types"
 import { useMemo, useState } from "react"
 import ReservationFilter from "./ReservationFilter"
 import ReservationCard from "./ReservationCard";
+import Pagination from "@/components/ui/Pagination";
 
 interface UserReservationsProps {
     reservations: Reservation[];
+    pagination : {page : number, totalPages: number}
 }
 
-export default function UserReservations({ reservations } : UserReservationsProps) {
+export default function UserReservations({ reservations, pagination } : UserReservationsProps) {
 
     const [filter, setFilter] = useState<Filter>('ACTIVE')
 
@@ -26,6 +28,9 @@ export default function UserReservations({ reservations } : UserReservationsProp
                 {reservationsShow.map(reservation => (
                     <ReservationCard reservation={reservation} key={reservation.id} />
                 ))}
+                <div className="flex items-center justify-end">
+                    <Pagination page={pagination.page} totalPages={pagination.totalPages} />
+                </div>
             </div>
         </div>
     )

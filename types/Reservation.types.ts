@@ -5,6 +5,16 @@ export type ReservationStatus = "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKE
 
 export type Filter = 'ACTIVE' | 'COMPLETED' | 'CANCELED'
 
+export interface ReservationFilters {
+    status?: string | string[];
+    _page?: string | string[];
+    _size?: string | string[];
+    user?: string | string[];
+    room?: string | string[];
+    checkInDate?: string | string[] | Date;
+    checkOutDate?: string | string[] | Date; 
+}
+
 export interface ReservationSaveDTO {
     checkInDate: Date | string;
     checkOutDate: Date | string;
