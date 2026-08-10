@@ -3,6 +3,18 @@ import { Role } from "./User.types";
 
 export type ReservationStatus = "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKED_OUT" | "CANCELED" | "NO_SHOW"
 
+export type Filter = 'ACTIVE' | 'COMPLETED' | 'CANCELED'
+
+export interface ReservationFilters {
+    status?: string | string[];
+    _page?: string | string[];
+    _size?: string | string[];
+    user?: string | string[];
+    room?: string | string[];
+    checkInDate?: string | string[] | Date;
+    checkOutDate?: string | string[] | Date; 
+}
+
 export interface ReservationSaveDTO {
     checkInDate: Date | string;
     checkOutDate: Date | string;
@@ -34,6 +46,14 @@ export interface Reservation {
         amenities: string[];
         capacity: number;
         category: RoomCategory;
+        images: {
+            id: number;
+            url: string;
+            originalName: string;
+            fileSize: number;
+            contentType: string;
+            createdAt?: string;
+        }[]; 
     };
     user: {
         id: number;

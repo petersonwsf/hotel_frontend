@@ -41,7 +41,6 @@ export default function RoomHeader() {
             try {
                 const room = await createRoom(formData)
                 handleToast('Quarto criado com sucesso!', 'success')
-                console.log(room)
                 setOpenModal(false)
             } catch (err: any) {
                 handleToast(err.response.data.message, 'error')
