@@ -1,4 +1,4 @@
-import { ContactInformation } from "./ContactInformation";
+import { ContactInformation } from "./ContactInformation.types";
 
 export type Role = "ADMIN" | "ATTENDANT" | "CLIENT"
 

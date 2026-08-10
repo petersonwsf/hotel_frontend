@@ -32,8 +32,8 @@ export default function SidebarUser() {
                 <div onClick={() => redirectToPage('/user/personalData')} className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/dados' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>
                     <IoPersonOutline /> Dados pessoais
                 </div>
-                <div onClick={() => redirectToPage('/user')} className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/enderecos' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>
-                    <IoHome /> Meus endereços
+                <div onClick={() => redirectToPage('/user/address')} className={`flex items-center gap-2 px-[1rem] py-[1rem] text-xl font-light border-b-1 border-gray-300 cursor-pointer duration-[.3s] ${pathname === '/enderecos' ? 'font-normal border-b-3 rounded-lg border-b-[#002179] text-[#002179]' : ''} hover:border-b-3 hover:rounded-lg hover:font-[400] hover:border-b-[#002179] hover:text-[#002179]`}>
+                    <IoHome /> Meu endereço
                 </div>
             </div>
         </div>
