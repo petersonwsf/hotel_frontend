@@ -43,20 +43,22 @@ export default function PersonalDataform({ client } : PersonalDataForm) {
                 }}
                 onSubmit={(values) => updateClient(client.id, values)}
             >
-                <Form>
-                    <InputText label="Nome" name="name" />
-                    <div className='flex my-3 gap-3'>
-                        <InputText label="Email" name="email" type="email" icon={MdOutlineEmail} />
-                        <InputText label="Telefone" name="phoneNumber" type="text" icon={FiPhone} />
-                    </div>
-                    <div className='flex my-3 gap-3'>
-                        <InputText label="CPF" name="pin" type="text" icon={HiOutlineIdentification} />
-                        <InputText label="Data de nascimento" name="dateOfBirth" type="date" icon={CiCalendar} />
-                    </div>
-                    <div className="mt-[1.5rem] flex justify-end">
-                        <button className="text-[#002179] mt-[1rem] border text-white py-[.5rem] bg-[#002179] px-[2rem] cursor-pointer rounded-[7px] font-normal">Atualizar informações</button>
-                    </div>
-                </Form>
+                {({ isSubmitting }) => (
+                    <Form>
+                        <InputText label="Nome" name="name" />
+                        <div className='flex my-3 gap-3'>
+                            <InputText label="Email" name="email" type="email" icon={MdOutlineEmail} />
+                            <InputText label="Telefone" name="phoneNumber" type="text" icon={FiPhone} />
+                        </div>
+                        <div className='flex my-3 gap-3'>
+                            <InputText label="CPF" name="pin" type="text" icon={HiOutlineIdentification} />
+                            <InputText label="Data de nascimento" name="dateOfBirth" type="date" icon={CiCalendar} />
+                        </div>
+                        <div className="mt-[1.5rem] flex justify-end">
+                            <button className={`text-[#002179] mt-[1rem] border text-white py-[.5rem] bg-[#002179] px-[2rem] cursor-pointer rounded-[7px] font-normal ${isSubmitting ? 'opacity-[.5] pointer-events-none' : ''}`}>{isSubmitting ? 'Atualizando...' : 'Atualizar informações'}</button>
+                        </div>
+                    </Form>
+                )}
             </Formik>
         </div>
     )
