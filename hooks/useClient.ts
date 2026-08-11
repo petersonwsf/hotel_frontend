@@ -44,8 +44,22 @@ export default function useClient() {
         }
     }
 
+    async function updateProfilePicture(file: File, id: number) {
+
+        const formData = new FormData()
+        formData.append("image", file)
+
+        try {
+            const response = await api.patch(`/hotel/client/profilePicture/${id}`, formData)
+            return response.data
+        } catch (error : any) {
+            handleToast(error.response.data.message, "error")
+        }
+    }
+
     return {
         updateClient,
-        updateAddress
+        updateAddress,
+        updateProfilePicture,
     }
 }

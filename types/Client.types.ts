@@ -26,6 +26,14 @@ export interface Client {
     email: string;
     dateOfBirth: string | Date;
     contactInformation : ContactInformation;
+    image: {
+        id: number;
+        url: string;
+        originalName: string;
+        fileSize: number;
+        contentType: string;
+        createdAt?: string;
+    };
 }
 
 export interface ContactInformation {

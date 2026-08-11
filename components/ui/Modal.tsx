@@ -11,14 +11,26 @@ interface ModalRoomProps {
     children?: React.ReactNode;
 }
 
+const sizeMap: Record<Width, string> = {
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+    "3xl": "max-w-3xl",
+    "4xl": "max-w-4xl",
+    "5xl": "max-w-5xl",
+};
+
 export default function Modal({ isOpen, onClose, title, children, size = "md" } : ModalRoomProps ) {
 
     if (!isOpen) return null;
 
+    const maxWithClass = sizeMap[size];
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-300 animate-fade-in" onClick={onClose} />
-            <div className={`flex flex-col relative bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] p-6 transform transition-all duration-300 scale-100 opacity-100 animate-zoom-in`}>
+            <div className={`flex flex-col relative bg-white rounded-xl shadow-xl w-full ${maxWithClass} max-h-[90vh] p-6 transform transition-all duration-300 scale-100 opacity-100 animate-zoom-in`}>
                 <div className="flex items-center justify-between border-b border-gray-100 pb-3 shrink-0">
                     <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
                     <button 
