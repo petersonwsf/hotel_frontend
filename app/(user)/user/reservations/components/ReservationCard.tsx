@@ -1,19 +1,34 @@
 "use client"
+import usePayment from "@/hooks/usePayment";
+import { Payment } from "@/types/Payment.types";
 import { Reservation } from "@/types/Reservation.types"
 import { formatShortDate } from "@/utils/formatDate";
 import { getRoomCategoryLabel } from "@/utils/formatTextsRooms"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa";
-
+import PaymentReservationCard from "./PaymentReservationCard";
 
 interface ReservationCardProps {
-    reservation: Reservation
+    reservation: Reservation;
 }
 
 export default function ReservationCard({ reservation } : ReservationCardProps) {
 
     const [viewDetails, setViewDetails] = useState<boolean>(false)
+    const [reservationPayment, setReservationPayment] = useState<Payment | null>(null)
+    const [loadingPayment, setLoadingPayment] = useState<boolean>(false)
+    const { getReservationPayments } = usePayment()
+
+    useEffect(() => {
+        const fetchPayment = async () => {
+            setLoadingPayment(true)
+            const payment = await getReservationPayments(reservation.id)
+            setReservationPayment(payment)
+            setLoadingPayment(false)
+        }
+        fetchPayment()
+    }, [reservation])
 
     return (
         <div className="w-full">
@@ -54,8 +69,8 @@ export default function ReservationCard({ reservation } : ReservationCardProps) 
             </div>
             <div className={`grid transition-all duration-300 ease-in-out ${viewDetails ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                 <div className="overflow-hidden">
-                    <div className="p-4 bg-gray-100 border border-t-0 border-gray-300 rounded-b-lg">
-                        <p className="text-gray-700">Detalhes da reserva #{reservation.id}...</p>
+                    <div className="py-[1.5rem] bg-gray-50 border border-t-0 border-gray-300 rounded-b-lg">
+                        <PaymentReservationCard loadingPayment={loadingPayment} setPayment={setReservationPayment} reservation={reservation} payment={reservationPayment} />
                     </div>
                 </div>
             </div>

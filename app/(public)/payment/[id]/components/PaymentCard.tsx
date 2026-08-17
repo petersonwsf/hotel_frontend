@@ -78,7 +78,7 @@ export default function PaymentCard({ reservation, user } : PaymentCardProps) {
                 </div>
             ) : (
                 <Elements stripe={stripePromise} options={{clientSecret: payment.clientSecret}}>
-                    <PaymentCardForm clientSecret={payment.clientSecret} />
+                    <PaymentCardForm clientSecret={payment.clientSecret} stripeWrapperClass="w-full rounded-lg border outline-none border-gray-300 bg-white p-3 text-[17px] transition focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200"/>
                 </Elements>
             )}
         </div>
