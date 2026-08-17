@@ -46,5 +46,6 @@ export async function getReservationsByUser(userId?: number, params?: Reservatio
             err = 'forbidden'
             redirect(`/?error=${err}`)
         }
+        return []
     }
 }

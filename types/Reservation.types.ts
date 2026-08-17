@@ -6,9 +6,10 @@ export type ReservationStatus = "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKE
 export type Filter = 'ACTIVE' | 'COMPLETED' | 'CANCELED'
 
 export interface ReservationFilters {
+    sort?: string;
     status?: string | string[];
-    _page?: string | string[];
-    _size?: string | string[];
+    page?: string | string[];
+    size?: string | string[];
     user?: string | string[];
     room?: string | string[];
     checkInDate?: string | string[] | Date;

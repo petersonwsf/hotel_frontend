@@ -23,13 +23,13 @@ export default async function UserReservationsPage({ searchParams }: PageProps) 
         console.log(error.response)
     }
 
-    const reservations = await getReservationsByUser(user?.id, { _page: page ?? '1', status })
+    const reservations = await getReservationsByUser(user?.id, { page: page ?? '0', size: '10', sort: 'createdAt,desc', status })
 
     return (
         <div className="w-full">
             <h2 className="font-[650] text-[#002179] text-4xl">Minhas Reservas</h2>
             <p className="font-light text-gray-500 text-lg my-2">fique por dentro das suas reservas no Lúmen Hotel</p>
-            <UserReservations reservations={reservations?.content ?? []} pagination={{page: reservations ? (reservations.pageable.pageNumber + 1) : 1, totalPages: reservations ? reservations.totalPages : 1 }}/>
+            <UserReservations reservations={reservations?.content ?? []} pagination={{page: reservations ? (reservations.pageable.pageNumber) : 0, totalPages: reservations ? reservations.totalPages : 0 }}/>
         </div>
     )
 }

@@ -63,7 +63,6 @@ export default function Profile({ client } : ProfileProps) {
             >
                 <FormUploadImage onSubmit={handleUploadProfilePicture} id={client.userId} />
             </Modal>
-            
         </div>
     )
 }

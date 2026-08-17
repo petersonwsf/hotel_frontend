@@ -1,17 +1,16 @@
 "use client"
+import { Payment } from "@/types/Payment.types";
 import { handleToast } from "@/utils/handleToast";
-import { useElements, useStripe, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js"
-import { useState } from "react"
+import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-interface PaymentCardFormProps {
-    clientSecret: string;
-    stripeWrapperClass?: string; // Estilo dos inputs do formulário
-    afterPayment: () => void;
+interface CardPaymentFormProps {
+    payment: Payment;
 }
 
-export default function PaymentCardForm({ clientSecret, stripeWrapperClass, afterPayment } : PaymentCardFormProps) {
-    
+export default function CardPaymentForm({ payment } : CardPaymentFormProps) {
+
     const stripe = useStripe()
     const elements = useElements()
     const [name, setName] = useState<string>('')
@@ -24,7 +23,7 @@ export default function PaymentCardForm({ clientSecret, stripeWrapperClass, afte
 
         const cardNumberElement = elements.getElement(CardNumberElement)
 
-        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        const { paymentIntent, error } = await stripe.confirmCardPayment(payment.clientSecret, {
             payment_method: {
                 card: cardNumberElement!,
                 billing_details: { name }
@@ -36,7 +35,6 @@ export default function PaymentCardForm({ clientSecret, stripeWrapperClass, afte
             handleToast(error.message ?? '', 'error')
         } else if (paymentIntent.status === 'succeeded') {
             handleToast('Pagamento realizado com sucesso', 'success')
-            afterPayment()
         }
         setIsProcessing(false)
     }
@@ -57,6 +55,9 @@ export default function PaymentCardForm({ clientSecret, stripeWrapperClass, afte
             },
         }
     };
+
+    const stripeWrapperClass =
+        "w-full rounded-lg border outline-none border-gray-300 bg-white p-3 text-[17px] transition focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200"
 
     return (
         <form onSubmit={handleSubmit} className="p-[1.5rem] bg-blue-100 rounded-xl">

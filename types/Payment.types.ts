@@ -13,6 +13,7 @@ export interface CreatePaymentData {
 
 export interface Payment {
     id: number;
+    amount: number;
     amountAuthorized: number;
     amountCaptured: number;
     captureMethod: CaptureMethod;
