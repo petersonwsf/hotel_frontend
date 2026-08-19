@@ -11,7 +11,7 @@ export default function RoomDescription({ room } : RoomDescriptnProps) {
     return (
         <div>
             <div className="w-full h-[400px] relative">
-                <img src={room.images[0].url} alt="" className="w-full h-full object-cover rounded-t-xl" />
+                <img src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${room.image[0]}`} alt="" className="w-full h-full object-cover rounded-t-xl" />
                 <div className="py-[.2rem] px-[1.5rem] bg-[#002BB3] absolute top-[20px] left-[20px] z-[10000] rounded-[10px]">
                     <p className="m-[0] text-white font-semibold">{getRoomCategoryLabel(room.category)}</p>
                 </div>

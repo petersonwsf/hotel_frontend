@@ -34,7 +34,7 @@ export default function ReservationCard({ reservation } : ReservationCardProps) 
         <div className="w-full">
             <div className={`flex gap-5 border border-gray-300 w-full transition-all duration-300 ${viewDetails ? 'rounded-t-lg' : 'rounded-lg'}`}>
                 <div className={`relative h-[250px] w-[250px] overflow-hidden transition-all duration-300 ${viewDetails ? 'rounded-tl-lg' : 'rounded-l-lg'}`}>
-                    <img src={reservation.room.images[0].url} alt={`Foto do quarto ${reservation.room.code}`} className="h-full w-full object-cover"/>
+                    <img src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${reservation.room.image[0]}`} alt={`Foto do quarto ${reservation.room.code}`} className="h-full w-full object-cover"/>
                 </div>
                 <div className="p-[1rem] flex flex-col flex-1">
                     <p className="text-gray-400 text-xl tracking-[.1rem]">#{reservation.id}</p>

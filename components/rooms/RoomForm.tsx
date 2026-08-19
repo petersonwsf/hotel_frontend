@@ -37,7 +37,7 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
 
     const [imageSelected, setImageSelected] = useState<number>(0)
     const [room, setRoom] = useState<Room | null>(null)
-    const [existingImages, setExistingImages] = useState<Room['images']>([])
+    const [existingImages, setExistingImages] = useState<Room['image']>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     const { getRoomById } = useRooms()
@@ -99,7 +99,7 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                         }
 
                         function removeExistingImage(urlToRemove: string) {
-                            setExistingImages(prev => prev.filter(image => image.url !== urlToRemove))
+                            setExistingImages(prev => prev.filter(image => image !== urlToRemove))
                         }
 
                         return (
@@ -158,9 +158,9 @@ export default function RoomForm({ submit, id } : RoomFormProps) {
                                             <div key={`existing_image_${index}`} className="relative cursor-pointer shadow-blue-300/50 hover:shadow-lg duration-[.3s]" onClick={() => setImageSelected(index)}>
                                                 <GoXCircleFill  className="w-5 h-5 absolute right-[-5px] z-10 top-[-10px] rounded-[50%]" onClick={(e) => {
                                                     e.stopPropagation()
-                                                    removeExistingImage(existingImage.url)
+                                                    removeExistingImage(existingImage)
                                                 }} style={{color: 'red', background: '#fff'}}/>
-                                                <img src={existingImage.url} alt="Imagens" style={{width: '75px'}} />
+                                                <img src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${existingImage}`} alt="Imagens" style={{width: '75px'}} />
                                             </div>
                                         ))}
                                         {(values.images as File[]).map((image, index) => (

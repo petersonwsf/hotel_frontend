@@ -7,17 +7,19 @@ interface CardRoom {
     buttonFunction: () => void;
 }
 
+const minio_url = process.env.NEXT_PUBLIC_URL_MINIO 
+
 export default function CardRoom({ width, room, buttonFunction }: CardRoom) {
 
     let mainImageUrl = ''
 
-    if (room.images) {
-        if (Array.isArray(room.images)) {
-            if (room.images.length > 0) {
-                mainImageUrl = room.images[0].url
+    if (room.image) {
+        if (Array.isArray(room.image)) {
+            if (room.image.length > 0) {
+                mainImageUrl = `${minio_url}/${room.image[0]}`
             }
         } else {
-            mainImageUrl = room.images.url
+            mainImageUrl = `${minio_url}/${room.image}`
         }
     }
 
