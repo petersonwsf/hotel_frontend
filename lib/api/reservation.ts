@@ -1,4 +1,4 @@
-import { ReservationFilters } from "@/types/Reservation.types";
+import { Reservation, ReservationFilters } from "@/types/Reservation.types";
 import { api } from "./api"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -6,7 +6,7 @@ import { buildQueryParams } from "@/utils/buildQueryParams";
 
 const URL = process.env.URL_API_HOTEL
 
-export async function getReservation(id: number) {
+export async function getReservation(id: number) : Promise<Reservation> {
 
     const cookiesStore = await cookies()
     const token = cookiesStore.get("token")?.value
@@ -24,6 +24,7 @@ export async function getReservation(id: number) {
             err = 'forbidden'
             redirect(`/?error=${err}`)
         }
+        throw error
     }
 }
 

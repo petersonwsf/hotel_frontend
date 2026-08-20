@@ -14,7 +14,7 @@ export default function NextReservationComponent({ nextReservation } : NextReser
     return (
         <div className="flex rounded-xl overflow-hidden gap-5 border-1 border-gray-200 w-full max-w-[800px]">
             <div className="relative h-[300px] w-[300px] overflow-hidden">
-                <img src={nextReservation.room.images[0].url} alt={`Foto do quarto ${nextReservation.room.code}`} className="h-full w-full object-cover"/>
+                <img src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${nextReservation.room.image[0]}`} alt={`Foto do quarto ${nextReservation.room.code}`} className="h-full w-full object-cover"/>
                 <span className="absolute left-2 top-3 py-[.2rem] px-[1rem]  font-semibold text-white text-[12px] bg-[#002179] rounded-xl">Próxima Estadia</span>
             </div>
             <div className="flex flex-col p-[1rem] w-full">

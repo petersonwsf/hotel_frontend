@@ -35,12 +35,13 @@ export default function useRooms() {
         }
     }
 
-    async function checkAvailability(checkIn: string, checkOut: string, roomId: number) {
+    async function checkAvailability(checkIn: string, checkOut: string, roomId: number, reservationId?: number) {
         try {
             const response = await api.get(`hotel/room/disponibility/${roomId}`, {
                 params: {
                     checkIn,
-                    checkOut
+                    checkOut,
+                    reservationId
                 }
             });
             return response.data;

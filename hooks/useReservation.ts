@@ -1,7 +1,7 @@
 "use client"
 
 import { api } from "@/lib/api/api";
-import { Reservation, ReservationSaveDTO } from "@/types/Reservation.types";
+import { Reservation, ReservationSaveDTO, ReservationUpdateDTO } from "@/types/Reservation.types";
 import { handleToast } from "@/utils/handleToast";
 import { useRouter } from "next/navigation";
 
@@ -27,7 +27,18 @@ export default function useReservation() {
         }
     }
 
+    async function updateReservation(data: ReservationUpdateDTO, id: number) {
+        try {
+            await api.patch(`/hotel/reservation/${id}`, data)
+            handleToast("Reserva criada com sucesso!", "success")
+            router.refresh()
+        } catch (error : any) {
+            handleToast(error.response.data.message, 'error')
+        }
+    }
+
     return {
-        createReservation
+        createReservation,
+        updateReservation
     }
 }

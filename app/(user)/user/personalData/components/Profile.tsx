@@ -38,8 +38,8 @@ export default function Profile({ client } : ProfileProps) {
             <div className="absolute top-1/2 -translate-y-1/2 flex gap-3 h-full w-full justify-between">
                 <div className="flex h-full items-center gap-4 px-[1rem]">
                     <div className="w-[100px] h-[100px] flex justify-center items-center rounded-lg border-4 border-white shadow-xl relative">
-                        {client.image ? (
-                            <img className="w-full h-full object-cover" src={client.image.url} alt="Imagem de perfil" />
+                        {client.imageKey ? (
+                            <img className="w-full h-full object-cover" src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${client.imageKey}`} alt="Imagem de perfil" />
                         ) : (
                             <img className="w-full h-full" src={`/images/icon_person.webp`} alt="Imagem de perfil" />
                         )}

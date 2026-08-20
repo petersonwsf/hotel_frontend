@@ -24,14 +24,7 @@ export interface RoomList {
     description: string;
     id: number;
     status: StatusRoom;
-    images: {
-        id: number;
-        url: string;
-        originalName: string;
-        fileSize: number;
-        contentType: string;
-        createdAt?: string;
-    };
+    image: string;
 }
 
 export interface Room { 
@@ -46,14 +39,7 @@ export interface Room {
     description: string;
     id: number;
     status: StatusRoom;
-    images: {
-        id: number;
-        url: string;
-        originalName: string;
-        fileSize: number;
-        contentType: string;
-        createdAt?: string;
-    }[];
+    image: string[];
 }
 
 export const optionsFloor = [
