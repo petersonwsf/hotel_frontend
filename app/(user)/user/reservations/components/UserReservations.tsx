@@ -6,6 +6,8 @@ import ReservationCard from "./ReservationCard";
 import Pagination from "@/components/ui/Pagination";
 import Modal from "@/components/ui/Modal";
 import EditReservation from "@/components/reservation/EditReservation/UpdateRerservation";
+import useReservation from "@/hooks/useReservation";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface UserReservationsProps {
     reservations: Reservation[];
@@ -17,15 +19,37 @@ export default function UserReservations({ reservations, pagination } : UserRese
     const [filter, setFilter] = useState<Filter>('ACTIVE')
     const [selectedReservationId, setSelectedReservationId] = useState<number | undefined>(undefined)
     const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
+    const [openModalDelete, setOpenModalDelete] = useState<boolean>(false)
 
-    const handleClose = () => {
+    const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
+
+    const { cancelReservation } = useReservation()
+
+    const handleCloseEdit = () => {
         setOpenModalEdit(false)
         setSelectedReservationId(undefined)
     }
 
-    const handleOpen = (id: number) => {
+    const handleOpenEdit = (id: number) => {
         setSelectedReservationId(id)
         setOpenModalEdit(true)
+    }
+
+    const handleCloseDelete = () => {
+        setOpenModalDelete(false)
+        setSelectedReservationId(undefined)
+    }
+
+    const handleOpenDelete = (id: number) => {
+        setSelectedReservationId(id)
+        setOpenModalDelete(true)
+    }
+
+    async function deleteReservation() {
+        setLoadingDelete(true)
+        await cancelReservation(selectedReservationId!)
+        setLoadingDelete(false)
+        handleCloseDelete()
     }
 
     return (
@@ -33,7 +57,7 @@ export default function UserReservations({ reservations, pagination } : UserRese
             <ReservationFilter activeFilter={filter} setFilter={setFilter} reservations={reservations} />
             <div className="flex flex-col gap-[2rem] my-[1.5rem]">
                 {reservations.length > 0  ? reservations.map(reservation => (
-                    <ReservationCard reservation={reservation} key={reservation.id} openEditModal={handleOpen} />
+                    <ReservationCard reservation={reservation} key={reservation.id} openEditModal={handleOpenEdit} openDeleteModal={handleOpenDelete} />
                 )) : (
                     <div className="w-full flex justify-center items-center h-[150px]">
                         <p className="font-light text-gray-500 text-xl">Não há reservas</p>
@@ -49,7 +73,22 @@ export default function UserReservations({ reservations, pagination } : UserRese
                 title={`Editar reserva ${selectedReservationId}`}
                 size="3xl"
             >
-                <EditReservation onCloseModal={handleClose} reservationId={selectedReservationId} />
+                <EditReservation onCloseModal={handleCloseEdit} reservationId={selectedReservationId} />
+            </Modal>
+
+            <Modal
+                isOpen={openModalDelete}
+                onClose={handleCloseDelete}
+                title={`Cancelar reserva ${selectedReservationId}`}
+                size="xl"
+            >
+                <p>Tem certeza que deseja cancelar a reserva? Essa ação não poderá ser defeita</p>
+                <div className="flex justify-end gap-3 mt-4">
+                    <button onClick={handleCloseDelete} className="bg-[#002179] text-white py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">Manter</button>
+                    <button onClick={deleteReservation} className={`text-[#fff] bg-[#9A0526] py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal ${loadingDelete ? 'opacity-[.5] pointer-events-none' : ''}`}>
+                        {loadingDelete ? <span className="flex items-center gap-2"><AiOutlineLoading3Quarters className="animate-spin" fontSize={15}/> Cancelando</span> : 'Cancelar Reserva'}
+                    </button>
+                </div>
             </Modal>
         </div>
     )

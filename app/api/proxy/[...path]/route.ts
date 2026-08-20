@@ -24,9 +24,16 @@ async function handler(req: NextRequest) {
 
     const isFormData = req.headers.get('content-type')?.includes('multipart/form-data')
 
-    const body = req.method !== 'GET' && req.method !== 'HEAD'
-        ? isFormData ? await req.formData() : await req.json()
-        : undefined
+    let body: any = undefined;
+    
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+        if (isFormData) {
+            body = await req.formData();
+        } else {
+            const rawBody = await req.text();
+            body = rawBody ? JSON.parse(rawBody) : undefined;
+        }
+    }
 
     const response = await fetch(`${baseUrl}${servicePath}${search}`, {
         method: req.method,
@@ -37,8 +44,14 @@ async function handler(req: NextRequest) {
         body: isFormData ? body as FormData : body ? JSON.stringify(body) : undefined
     })
 
-    const data = await response.json()
-    return NextResponse.json(data, { status: response.status })
+    const text = await response.text();
+    let data;
+    try {
+        data = text ? JSON.parse(text) : { success: response.ok };
+    } catch (err) {
+        data = { message: text || "Erro interno no serviço externo" };
+    }
+    return NextResponse.json(data, { status: response.status });
 }
 
 export const GET = handler

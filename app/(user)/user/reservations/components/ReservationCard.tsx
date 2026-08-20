@@ -13,9 +13,10 @@ import { isPastDate } from "@/utils/isPasteDate";
 interface ReservationCardProps {
     reservation: Reservation;
     openEditModal: (id: number) => void;
+    openDeleteModal: (id: number) => void;
 }
 
-export default function ReservationCard({ reservation, openEditModal } : ReservationCardProps) {
+export default function ReservationCard({ reservation, openEditModal, openDeleteModal } : ReservationCardProps) {
 
     const [viewDetails, setViewDetails] = useState<boolean>(false)
     const [reservationPayment, setReservationPayment] = useState<Payment | null>(null)
@@ -33,7 +34,7 @@ export default function ReservationCard({ reservation, openEditModal } : Reserva
     }, [reservation, viewDetails])
 
     const allowedUpdate = useMemo(() => {
-        const validStatus = ['CONFIRMED', 'PENDING']
+        const validStatus = ['CONFIRMED', 'PENDING', 'CANCELLED']
         const pasteDate = isPastDate(reservation.checkInDate)
         return validStatus.includes(reservation.status) && !pasteDate
     }, [reservation])
@@ -72,6 +73,7 @@ export default function ReservationCard({ reservation, openEditModal } : Reserva
                         <button onClick={() => setViewDetails(prev => !prev)} className="bg-[#002179] text-white py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">
                             {viewDetails ? "Ocultar Detalhes" : "Ver Detalhes"}
                         </button>
+                        {allowedUpdate && <button onClick={() => openDeleteModal(reservation.id)} className="text-[#fff] bg-[#9A0526] py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">Cancelar Reserva</button>}
                     </div>
                 </div>
             </div>
