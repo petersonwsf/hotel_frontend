@@ -26,6 +26,15 @@ export interface ReservationSaveDTO {
     roomId: number;
 }
 
+export interface ReservationUpdateDTO {
+    checkInDate?: Date | string;
+    checkOutDate?: Date | string;
+    discountAmount?: number;
+    serviceFee?: number;
+    status?: ReservationStatus;
+    roomId?: number;
+}
+
 export interface Reservation {
     id: number;
     checkInDate: Date | string;

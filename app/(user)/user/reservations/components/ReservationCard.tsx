@@ -4,16 +4,18 @@ import { Payment } from "@/types/Payment.types";
 import { Reservation } from "@/types/Reservation.types"
 import { formatShortDate } from "@/utils/formatDate";
 import { getRoomCategoryLabel } from "@/utils/formatTextsRooms"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa";
 import PaymentReservationCard from "./PaymentReservationCard";
+import { isPastDate } from "@/utils/isPasteDate";
 
 interface ReservationCardProps {
     reservation: Reservation;
+    openEditModal: (id: number) => void;
 }
 
-export default function ReservationCard({ reservation } : ReservationCardProps) {
+export default function ReservationCard({ reservation, openEditModal } : ReservationCardProps) {
 
     const [viewDetails, setViewDetails] = useState<boolean>(false)
     const [reservationPayment, setReservationPayment] = useState<Payment | null>(null)
@@ -27,7 +29,13 @@ export default function ReservationCard({ reservation } : ReservationCardProps) 
             setReservationPayment(payment)
             setLoadingPayment(false)
         }
-        fetchPayment()
+        if (viewDetails) fetchPayment()
+    }, [reservation, viewDetails])
+
+    const allowedUpdate = useMemo(() => {
+        const validStatus = ['CONFIRMED', 'PENDING']
+        const pasteDate = isPastDate(reservation.checkInDate)
+        return validStatus.includes(reservation.status) && !pasteDate
     }, [reservation])
 
     return (
@@ -60,7 +68,7 @@ export default function ReservationCard({ reservation } : ReservationCardProps) 
                         </div>
                     </div>
                     <div className="h-full flex justify-end gap-5 items-end">
-                        <button className="text-[#002179] border border-[#002179] py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">Atualizar Reserva</button>
+                        {allowedUpdate && <button className="text-[#002179] border border-[#002179] py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal" onClick={() => openEditModal(reservation.id)}>Atualizar Reserva</button>}
                         <button onClick={() => setViewDetails(prev => !prev)} className="bg-[#002179] text-white py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">
                             {viewDetails ? "Ocultar Detalhes" : "Ver Detalhes"}
                         </button>
