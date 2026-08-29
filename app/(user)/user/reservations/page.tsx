@@ -23,7 +23,7 @@ export default async function UserReservationsPage({ searchParams }: PageProps) 
         console.log(error.response)
     }
 
-    const reservations = await getReservationsByUser(user?.id, { page: page ?? '0', size: '10', sort: 'createdAt,desc', status })
+    const reservations = await getReservationsByUser(user?.id, { page: page ?? '0', size: '10', sort: 'createdAt,desc', status: status ? status : ['PENDING', 'CONFIRMED'] })
 
     return (
         <div className="w-full">

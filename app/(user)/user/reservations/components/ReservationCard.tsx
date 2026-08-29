@@ -6,16 +6,21 @@ import { formatShortDate } from "@/utils/formatDate";
 import { getRoomCategoryLabel } from "@/utils/formatTextsRooms"
 import { useEffect, useMemo, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
-import { FaUsers } from "react-icons/fa";
+import { FaPen, FaRegTrashAlt, FaUsers } from "react-icons/fa";
 import PaymentReservationCard from "./PaymentReservationCard";
 import { isPastDate } from "@/utils/isPasteDate";
+import StatusReservation from "@/components/reservation/StatusReservation";
+import { IoEyeOutline } from "react-icons/io5";
+import { LuEyeClosed } from "react-icons/lu";
+
 
 interface ReservationCardProps {
     reservation: Reservation;
     openEditModal: (id: number) => void;
+    openDeleteModal: (id: number) => void;
 }
 
-export default function ReservationCard({ reservation, openEditModal } : ReservationCardProps) {
+export default function ReservationCard({ reservation, openEditModal, openDeleteModal } : ReservationCardProps) {
 
     const [viewDetails, setViewDetails] = useState<boolean>(false)
     const [reservationPayment, setReservationPayment] = useState<Payment | null>(null)
@@ -33,7 +38,7 @@ export default function ReservationCard({ reservation, openEditModal } : Reserva
     }, [reservation, viewDetails])
 
     const allowedUpdate = useMemo(() => {
-        const validStatus = ['CONFIRMED', 'PENDING']
+        const validStatus = ['CONFIRMED', 'PENDING', 'CANCELLED']
         const pasteDate = isPastDate(reservation.checkInDate)
         return validStatus.includes(reservation.status) && !pasteDate
     }, [reservation])
@@ -45,7 +50,10 @@ export default function ReservationCard({ reservation, openEditModal } : Reserva
                     <img src={`${process.env.NEXT_PUBLIC_URL_MINIO}/${reservation.room.image[0]}`} alt={`Foto do quarto ${reservation.room.code}`} className="h-full w-full object-cover"/>
                 </div>
                 <div className="p-[1rem] flex flex-col flex-1">
-                    <p className="text-gray-400 text-xl tracking-[.1rem]">#{reservation.id}</p>
+                    <div className="flex justify-between items-center">
+                        <p className="text-gray-400 text-xl tracking-[.1rem]">#{reservation.id}</p>
+                        <StatusReservation status={reservation.status}/>
+                    </div>
                     <h3 className="text-[#002179] text-3xl font-[500] tracking-[.05rem]">{getRoomCategoryLabel(reservation.room.category)} - Lúmen Hotel</h3>
                     <div className="flex gap-[2rem] border-b border-gray-300 pb-4">
                         <div className="flex gap-3 mt-5">
@@ -67,11 +75,12 @@ export default function ReservationCard({ reservation, openEditModal } : Reserva
                             </div>
                         </div>
                     </div>
-                    <div className="h-full flex justify-end gap-5 items-end">
-                        {allowedUpdate && <button className="text-[#002179] border border-[#002179] py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal" onClick={() => openEditModal(reservation.id)}>Atualizar Reserva</button>}
-                        <button onClick={() => setViewDetails(prev => !prev)} className="bg-[#002179] text-white py-[.2rem] px-[2rem] cursor-pointer rounded-[7px] font-normal">
-                            {viewDetails ? "Ocultar Detalhes" : "Ver Detalhes"}
+                    <div className="h-full flex justify-end gap-3 items-end">
+                        {allowedUpdate && <button className="text-[#002179] border border-[#002179] p-[.5rem] cursor-pointer rounded-[7px] font-normal" onClick={() => openEditModal(reservation.id)}><FaPen /></button>}
+                        <button onClick={() => setViewDetails(prev => !prev)} className="bg-[#002179] text-white p-[.5rem] cursor-pointer rounded-[7px] font-normal">
+                            {viewDetails ? <LuEyeClosed /> : <IoEyeOutline />}
                         </button>
+                        {allowedUpdate && <button onClick={() => openDeleteModal(reservation.id)} className="text-[#fff] bg-[#9A0526] p-[.5rem] cursor-pointer rounded-[7px] font-normal"><FaRegTrashAlt /></button>}
                     </div>
                 </div>
             </div>

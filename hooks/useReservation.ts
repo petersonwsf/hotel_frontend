@@ -37,8 +37,20 @@ export default function useReservation() {
         }
     }
 
+    async function cancelReservation(id: number) {
+        try {
+            await api.delete(`/hotel/reservation/${id}`)
+            handleToast("Reserva cancelada com sucesso!", "success")
+            router.refresh()
+        } catch (error: any) {
+            console.log(error.response)
+            handleToast(error.response.data.message, 'error')
+        }
+    }
+
     return {
         createReservation,
-        updateReservation
+        updateReservation,
+        cancelReservation
     }
 }
