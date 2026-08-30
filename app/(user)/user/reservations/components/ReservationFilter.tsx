@@ -8,7 +8,7 @@ interface ReservationFilter {
     reservations: Reservation[];
 }
 
-export default function ReservationFilter({ activeFilter, setFilter, reservations } : ReservationFilter) {
+export default function ReservationFilter({ activeFilter, setFilter, } : ReservationFilter) {
 
     const searchParams = useSearchParams()
     const pathname = usePathname()
