@@ -1,12 +1,16 @@
 import { RoomQueryParams } from "@/types/Room.types"
 import { api } from "./api"
 import { handleToast } from "@/utils/handleToast"
+import { buildQueryParams } from "@/utils/buildQueryParams"
 
 const URL = process.env.URL_API_HOTEL
 
 export async function getRooms(params: RoomQueryParams) {
+
+    const queryParams = buildQueryParams(params)
+
     try {
-        const res = await api.get(`${URL}/room`, { params })
+        const res = await api.get(`${URL}/room${queryParams}`)
         return res.data
     } catch (err : any) {
         handleToast(err.response.data.message, 'error')
