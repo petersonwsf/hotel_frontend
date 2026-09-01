@@ -14,9 +14,8 @@ interface UserReservationsProps {
     pagination : {page : number, totalPages: number}
 }
 
-export default function UserReservations({ reservations, pagination } : UserReservationsProps) {
+export default function ReservationsList({ reservations, pagination } : UserReservationsProps) {
 
-    const [filter, setFilter] = useState<Filter>('ACTIVE')
     const [selectedReservationId, setSelectedReservationId] = useState<number | undefined>(undefined)
     const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
     const [openModalDelete, setOpenModalDelete] = useState<boolean>(false)
@@ -54,7 +53,6 @@ export default function UserReservations({ reservations, pagination } : UserRese
 
     return (
         <div>
-            <ReservationFilter activeFilter={filter} setFilter={setFilter} reservations={reservations} />
             <div className="flex flex-col gap-[2rem] my-[1.5rem]">
                 {reservations.length > 0  ? reservations.map(reservation => (
                     <ReservationCard reservation={reservation} key={reservation.id} openEditModal={handleOpenEdit} openDeleteModal={handleOpenDelete} />
