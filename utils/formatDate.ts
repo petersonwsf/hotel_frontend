@@ -7,3 +7,10 @@ export function formatShortDate(dataStr: string | Date): string {
   const resultado = formatador.format(data).replace('.', '').replace('de', '');
   return resultado.replace(/\s(\w)/, (m) => m.toUpperCase());
 }
+
+export const formatDateToPtBR = (dateString: string) => {
+  if (!dateString) return "";
+  const [year, month, day] = dateString.split("-");
+  if (!year || !month || !day) return dateString;
+  return `${day}/${month}/${year}`;
+};

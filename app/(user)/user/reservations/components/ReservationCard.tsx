@@ -54,6 +54,7 @@ export default function ReservationCard({ reservation, openEditModal, openDelete
                         <p className="text-gray-400 text-xl tracking-[.1rem]">#{reservation.id}</p>
                         <StatusReservation status={reservation.status}/>
                     </div>
+                    <p className="text-sm font-light my-2 text-lg tracking-[.05rem]"><span className="font-semibold">Cliente: </span> {reservation.user.name}</p>
                     <h3 className="text-[#002179] text-3xl font-[500] tracking-[.05rem]">{getRoomCategoryLabel(reservation.room.category)} - Lúmen Hotel</h3>
                     <div className="flex gap-[2rem] border-b border-gray-300 pb-4">
                         <div className="flex gap-3 mt-5">

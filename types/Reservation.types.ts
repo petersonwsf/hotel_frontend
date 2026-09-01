@@ -13,7 +13,10 @@ export interface ReservationFilters {
     user?: string | string[];
     room?: string | string[];
     checkInDate?: string | string[] | Date;
-    checkOutDate?: string | string[] | Date; 
+    checkOutDate?: string | string[] | Date;
+    category?: string | string[];
+    floor?: string | string[];
+    guestName?: string;
 }
 
 export interface ReservationSaveDTO {
@@ -66,3 +69,12 @@ export interface Reservation {
         role: Role;
     }
 }
+
+export const optionsReservationStatus: { value: ReservationStatus, label: string }[] = [
+    { value: 'PENDING', label: 'Pendente' },
+    { value: 'CONFIRMED', label: 'Confirmada' },
+    { value: 'CHECKED_IN', label: 'Check-in Realizado' },
+    { value: 'CHECKED_OUT', label: 'Check-out Realizado' },
+    { value: 'CANCELED', label: 'Cancelada' },
+    { value: 'NO_SHOW', label: 'Não Compareceu (No-Show)' },
+]

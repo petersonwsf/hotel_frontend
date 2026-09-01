@@ -28,6 +28,30 @@ export async function getReservation(id: number) : Promise<Reservation> {
     }
 }
 
+export async function getReservations(params?: ReservationFilters) {
+    const cookiesStore = await cookies()
+    const token = cookiesStore.get("token")?.value
+    const queryParams = buildQueryParams(params)
+
+    console.log(queryParams)
+
+    try {
+        const response = await api.get(`${URL}/reservation${queryParams}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        return response.data;
+    } catch (error : any) {
+        let err : string = ''
+        if (error.response.status == 403) {
+            err = 'forbidden'
+            redirect(`/?error=${err}`)
+        }
+        return []
+    }
+}
+
 export async function getReservationsByUser(userId?: number, params?: ReservationFilters) {
     const cookiesStore = await cookies()
     const token = cookiesStore.get("token")?.value
