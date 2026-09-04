@@ -37,7 +37,6 @@ export default function EditReservation({ reservationId, onCloseModal } : EditRe
                 setLoadingReservation(false)
                 return
             }
-            console.log(response.data)
             setReservation(response.data)
             setLoadingReservation(false)
         }

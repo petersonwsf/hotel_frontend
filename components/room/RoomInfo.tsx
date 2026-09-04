@@ -7,8 +7,6 @@ interface RoomInfoProps {
 
 export default function RoomInfo({ room }: RoomInfoProps) {
 
-    console.log(room)
-
     return (
         <div className="font-light text-xl [&>p]:my-2">
             <h2 className="text-3xl font-semibold my-3">Quarto: {room.code}</h2>

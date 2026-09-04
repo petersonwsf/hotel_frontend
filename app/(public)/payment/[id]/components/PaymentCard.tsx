@@ -39,7 +39,6 @@ export default function PaymentCard({ reservation, user } : PaymentCardProps) {
                 currency: 'brl',
                 customerEmail: user.login
             })
-            console.log(paymentResponse.payment)
             setPayment(paymentResponse.payment)
         } catch (error : any) {
             console.log(error)
