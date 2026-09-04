@@ -4,6 +4,7 @@ import { jwtVerify } from "jose";
 import { redirect } from "next/navigation";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { UserRegister } from "@/types/User.types";
+import { revalidatePath } from "next/cache";
 
 const URL_API_HOTEL = process.env.URL_API_HOTEL
 
@@ -49,6 +50,7 @@ export async function loginAction(prevState: unknown, data: {login: string, pass
 export async function logoutAction(prevState: unknown) {
     const cookiesStore = await cookies()
     cookiesStore.delete('token')
+    revalidatePath('/', 'layout')
 }
 
 export async function registerClientUser(prevState: unknown, data: UserRegister) {
