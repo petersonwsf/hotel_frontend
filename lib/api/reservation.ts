@@ -33,8 +33,6 @@ export async function getReservations(params?: ReservationFilters) {
     const token = cookiesStore.get("token")?.value
     const queryParams = buildQueryParams(params)
 
-    console.log(queryParams)
-
     try {
         const response = await api.get(`${URL}/reservation${queryParams}`, {
             headers: {

@@ -43,7 +43,26 @@ export default function useReservation() {
             handleToast("Reserva cancelada com sucesso!", "success")
             router.refresh()
         } catch (error: any) {
-            console.log(error.response)
+            handleToast(error.response.data.message, 'error')
+        }
+    }
+
+    async function checkInReservation(id: number) {
+        try {
+            await api.patch(`/hotel/reservation/checkIn/${id}`)
+            handleToast("Check In feito com sucesso!", "success")
+            router.refresh()
+        } catch (error: any) {
+            handleToast(error.response.data.message, 'error')
+        }
+    }
+
+    async function checkOutReservation(id: number) {
+        try {
+            await api.patch(`/hotel/reservation/checkOut/${id}`)
+            handleToast("Check Out feito com sucesso!", "success")
+            router.refresh()
+        } catch (error: any) {
             handleToast(error.response.data.message, 'error')
         }
     }
@@ -51,6 +70,8 @@ export default function useReservation() {
     return {
         createReservation,
         updateReservation,
-        cancelReservation
+        cancelReservation,
+        checkInReservation,
+        checkOutReservation,
     }
 }

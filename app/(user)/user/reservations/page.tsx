@@ -31,7 +31,7 @@ export default async function UserReservationsPage({ searchParams }: PageProps) 
             <h2 className="font-[650] text-[#002179] text-4xl">Minhas Reservas</h2>
             <p className="font-light text-gray-500 text-lg my-2">fique por dentro das suas reservas no Lúmen Hotel</p>
             <ReservationFilter />
-            <ReservationsList reservations={reservations?.content ?? []} pagination={{page: reservations ? (reservations.pageable.pageNumber) : 0, totalPages: reservations ? reservations.totalPages : 0 }}/>
+            <ReservationsList user={user} reservations={reservations?.content ?? []} pagination={{page: reservations ? (reservations.pageable.pageNumber) : 0, totalPages: reservations ? reservations.totalPages : 0 }}/>
         </div>
     )
 }

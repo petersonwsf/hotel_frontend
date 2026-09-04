@@ -12,15 +12,18 @@ import { isPastDate } from "@/utils/isPasteDate";
 import StatusReservation from "@/components/reservation/StatusReservation";
 import { IoEyeOutline } from "react-icons/io5";
 import { LuEyeClosed } from "react-icons/lu";
+import { User } from "@/contexts/AuthContext";
+import PaymentDetailsAdmin from "./PaymentDetailsAdmin";
 
 
 interface ReservationCardProps {
     reservation: Reservation;
     openEditModal: (id: number) => void;
     openDeleteModal: (id: number) => void;
+    user: User | null;
 }
 
-export default function ReservationCard({ reservation, openEditModal, openDeleteModal } : ReservationCardProps) {
+export default function ReservationCard({ reservation, openEditModal, openDeleteModal, user } : ReservationCardProps) {
 
     const [viewDetails, setViewDetails] = useState<boolean>(false)
     const [reservationPayment, setReservationPayment] = useState<Payment | null>(null)
@@ -34,8 +37,8 @@ export default function ReservationCard({ reservation, openEditModal, openDelete
             setReservationPayment(payment)
             setLoadingPayment(false)
         }
-        if (viewDetails) fetchPayment()
-    }, [reservation, viewDetails])
+        fetchPayment()
+    }, [reservation])
 
     const allowedUpdate = useMemo(() => {
         const validStatus = ['CONFIRMED', 'PENDING', 'CANCELLED']
@@ -54,7 +57,7 @@ export default function ReservationCard({ reservation, openEditModal, openDelete
                         <p className="text-gray-400 text-xl tracking-[.1rem]">#{reservation.id}</p>
                         <StatusReservation status={reservation.status}/>
                     </div>
-                    <p className="text-sm font-light my-2 text-lg tracking-[.05rem]"><span className="font-semibold">Cliente: </span> {reservation.user.name}</p>
+                    {user?.role !== 'CLIENT' && <p className="text-sm font-light my-2 text-lg tracking-[.05rem]"><span className="font-semibold">Cliente: </span> {reservation.user.name}</p>}
                     <h3 className="text-[#002179] text-3xl font-[500] tracking-[.05rem]">{getRoomCategoryLabel(reservation.room.category)} - Lúmen Hotel</h3>
                     <div className="flex gap-[2rem] border-b border-gray-300 pb-4">
                         <div className="flex gap-3 mt-5">
@@ -76,7 +79,7 @@ export default function ReservationCard({ reservation, openEditModal, openDelete
                             </div>
                         </div>
                     </div>
-                    <div className="h-full flex justify-end gap-3 items-end">
+                    <div className="h-full flex justify-end gap-3 items-end mt-3">
                         {allowedUpdate && <button className="text-[#002179] border border-[#002179] p-[.5rem] cursor-pointer rounded-[7px] font-normal" onClick={() => openEditModal(reservation.id)}><FaPen /></button>}
                         <button onClick={() => setViewDetails(prev => !prev)} className="bg-[#002179] text-white p-[.5rem] cursor-pointer rounded-[7px] font-normal">
                             {viewDetails ? <LuEyeClosed /> : <IoEyeOutline />}
@@ -88,7 +91,11 @@ export default function ReservationCard({ reservation, openEditModal, openDelete
             <div className={`grid transition-all duration-300 ease-in-out ${viewDetails ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                 <div className="overflow-hidden">
                     <div className="py-[1.5rem] bg-gray-50 border border-t-0 border-gray-300 rounded-b-lg">
-                        <PaymentReservationCard loadingPayment={loadingPayment} setPayment={setReservationPayment} reservation={reservation} payment={reservationPayment} />
+                        {user?.role !== 'CLIENT' ? (
+                            <PaymentDetailsAdmin reservation={reservation} payment={reservationPayment} loadingPayment={loadingPayment} />
+                        ) : (
+                            <PaymentReservationCard loadingPayment={loadingPayment} setPayment={setReservationPayment} reservation={reservation} payment={reservationPayment} />
+                        )}
                     </div>
                 </div>
             </div>
