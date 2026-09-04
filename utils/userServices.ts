@@ -17,7 +17,8 @@ export async function getUser() {
                 id: payload.id,
                 name: payload.name,
                 role: payload.role,
-                login: payload.sub
+                login: payload.sub,
+                imageKey: payload.imageKey,
             },
             success: true
         }

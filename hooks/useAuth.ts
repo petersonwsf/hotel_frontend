@@ -1,11 +1,10 @@
 "use client"
 import { loginAction, logoutAction, registerClientUser } from "@/actions/auth"
-import { UserRegister } from "@/types/UserRegister";
+import { UserRegister } from "@/types/User.types";
 import { useActionState, useTransition } from "react"
 
 export default function useAuth() {
     const [stateLogin, actionLogin, isPendingLogin] = useActionState(loginAction, null);
-    const [, actionLogout, ] = useActionState(logoutAction, null)
     const [stateRegisterClient, actionRegisterClient, isPendingRegisterClient] = useActionState(registerClientUser, null)
     const [, startTransition] = useTransition()
 
@@ -16,8 +15,9 @@ export default function useAuth() {
     }
 
     function logout() {
-        startTransition(() => {
-            actionLogout()
+        startTransition(async () => {
+            await logoutAction(null)
+            window.location.reload()
         })
     }
 

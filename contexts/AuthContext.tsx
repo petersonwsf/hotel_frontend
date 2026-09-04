@@ -6,6 +6,7 @@ export interface User {
     name: string;
     role: string;
     login: string;
+    imageKey?: string;
 }
 
 interface AuthContextType  {

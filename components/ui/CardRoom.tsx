@@ -27,7 +27,7 @@ export default function CardRoom({ width, room, buttonFunction }: CardRoom) {
     return (
         <div className={`flex ${width} my-3 p-4 gap-3 bg-gray-50 rounded-[10px]`}>
             <div className="flex items-center justify-center shrink-0">
-                <img src={mainImageUrl} alt="Image quarto" className="rounded-[20px] w-[200px]" />
+                <img src={mainImageUrl} alt="Image quarto" className="rounded-[20px] w-[250px] h-[250px] object-cover" />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
                 <div className="w-full flex flex-col gap-2">

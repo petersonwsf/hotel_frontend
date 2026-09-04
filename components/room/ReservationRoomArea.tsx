@@ -52,7 +52,7 @@ export default function ReservationRoomArea({ room }: ReservationRoomAreaProps) 
                     <p className="text-xl">Por <span className="font-semibold">{room.customPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></p>
                 </div>
                 <div>
-                    <button onClick={redirectToreservation} className="bg-green-600 text-xl rounded-[5px] text-white px-[2rem] py-2">Realizar reserva</button>
+                    <button onClick={redirectToreservation} className="bg-green-600 text-xl rounded-[5px] text-white px-[2rem] py-2 cursor-pointer hover:bg-green-700 duration-[.3s]">Realizar reserva</button>
                 </div>
             </div>
             <div className="mt-[2rem] p-[1rem] rounded-[10px] bg-gray-200">
