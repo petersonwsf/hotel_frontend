@@ -1,24 +1,37 @@
-import { IoPersonAdd } from "react-icons/io5";
 import Pagination from "@/components/ui/Pagination";
 import { listUsers } from "@/lib/api/user";
-import Table from "@/components/ui/Table";
 import { Suspense } from "react";
 import LoadingUsersTable from "./LoadingTableUsers";
-import { User } from "@/types/User.types";
+import TableUsers from "./components/TableUsers";
+import HeaderUsersPage from "./components/HeaderUsersPage";
+import FiltersUsers from "./components/FilterUsers";
+import { Role } from "@/types/User.types";
 
-export default async function Users() {
+type PageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-    const users = await listUsers({ page: 0, size: 10 })
+export default async function Users({ searchParams } : PageProps) {
+
+    const params = await searchParams
+
+    const users = await listUsers({ 
+        page: Number(params.page ?? 0), 
+        size:  Number(params.size ?? 5),
+        name: params.name ?? undefined,
+        phoneNumber: params.phoneNumber ?? undefined,
+        login: params.login ?? undefined,
+        role: params.role ? [ params.role as Role ] : ['ADMIN', 'ATTENDANT'], 
+        deleted: false
+    })
 
     return (
         <div>
-            <div className="flex justify-between">
-                <h2 className="text-3xl">Usuários</h2>
-                <button className="flex gap-2 bg-[#002BB3] hover:bg-[#001c78] duration-[.3s] items-center text-white py-2 px-4 rounded-[10px] cursor-pointer"><IoPersonAdd className="w-5 h-5"/> Adicionar usuário</button>
-            </div>
+            <HeaderUsersPage />
+            <FiltersUsers />
             <div className="w-full mt-[2rem] rounded-[10px] border-1 border-gray-100 shadow-2xl">
                 <Suspense fallback={<LoadingUsersTable />}>
-                    <Table columns={["ID", "Nome", "Login", "Telefone", "Papel", "Ações"]} data={users.content.map((user : User) => ({ ...user, actions: null }))} />
+                    <TableUsers users={users?.content ?? []} />
                 </Suspense>
                 <div className="flex w-full justify-between py-[1rem] px-[1rem]">
                     <div className="w-full flex items-center gap-2">
@@ -30,7 +43,7 @@ export default async function Users() {
                         </select>
                     </div>
                     <div className="w-full flex justify-end">
-                        <Pagination page={users.pageable.pageNumber + 1} totalPages={users.totalPages} />
+                        <Pagination page={users.pageable.pageNumber} totalPages={users.totalPages} />
                     </div>
                 </div>
             </div>
