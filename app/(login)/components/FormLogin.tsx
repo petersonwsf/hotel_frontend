@@ -3,8 +3,8 @@ import { Field, ErrorMessage, Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from 'yup'
 import useAuth from "@/hooks/useAuth";
-import { handleToast } from "@/utils/handleToast";
-import { useEffect } from "react";
+import { useState } from "react";
+import { UserRegister } from "@/types/User.types";
 
 const validationSchema = Yup.object({
     login: Yup.string().email('Email inválido').required('Email obrigatório'),
@@ -13,13 +13,7 @@ const validationSchema = Yup.object({
 
 export default function LoginForm() {
 
-    const { stateLogin, login, isPendingLogin } = useAuth()
-
-    useEffect(() => {
-        if (stateLogin?.erro) {
-            handleToast(stateLogin.erro, 'error')
-        }
-    }, [stateLogin?.erro])
+    const { login } = useAuth()
 
     const router = useRouter()
 
@@ -32,7 +26,7 @@ export default function LoginForm() {
             validationSchema={validationSchema}
             onSubmit={login}
         >
-            {({errors, touched }) => (
+            {({errors, touched, isSubmitting }) => (
                 <Form className="w-[80%]">
                     <div className="flex flex-col">
                         <label htmlFor="login">Email</label>
@@ -47,7 +41,7 @@ export default function LoginForm() {
                     <p className="text-[#002BB3] my-2">Esqueceu a senha?</p>
                     <a onClick={() => router.push("/register")} className="text-[#002BB3] my-2 cursor-pointer">Não possui conta? Registre-se</a>
                     <div className="w-full text-center my-5">
-                        <button type="submit" className="bg-[#002BB3] py-2 px-4 rounded-[5px] text-white cursor-pointer" disabled={isPendingLogin} style={{opacity: isPendingLogin ? '0.5' : undefined}}>{isPendingLogin ? 'Aguarde' : 'Login'}</button>
+                        <button type="submit" className="bg-[#002BB3] py-2 px-4 rounded-[5px] text-white cursor-pointer" disabled={isSubmitting} style={{opacity: isSubmitting ? '0.5' : undefined}}>{isSubmitting ? 'Aguarde' : 'Login'}</button>
                     </div>
                 </Form>
             )}

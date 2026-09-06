@@ -39,7 +39,9 @@ async function handler(req: NextRequest) {
     const response = await fetch(`${baseUrl}${servicePath}${search}`, {
         method: req.method,
         headers: {
-            ...(!isFormData && { 'Content-Type': 'application/json' }),
+            ...(isFormData
+                ? { 'Content-Type': contentType } // repassa com o boundary original
+                : { 'Content-Type': 'application/json' }),
             Authorization: token ? `Bearer ${token}` : '',
         },
         body: isFormData ? body : (body ? JSON.stringify(body) : undefined),

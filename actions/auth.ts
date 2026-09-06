@@ -1,14 +1,14 @@
 "use server";
 import { cookies } from "next/headers";
-import { jwtVerify } from "jose";
-import { redirect } from "next/navigation";
+import { JWTPayload, jwtVerify } from "jose";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { UserRegister } from "@/types/User.types";
 import { revalidatePath } from "next/cache";
 
 const URL_API_HOTEL = process.env.URL_API_HOTEL
 
-export async function loginAction(prevState: unknown, data: {login: string, password: string}) {
+export async function loginAction(prevState: unknown, data: {login: string, password: string}) : Promise<{ message: string, data: JWTPayload | null}> {
+
     try {
         const response = await fetch(`${URL_API_HOTEL}/user/login`, {
             method: 'POST',
@@ -35,15 +35,11 @@ export async function loginAction(prevState: unknown, data: {login: string, pass
 
         const { payload } = await jwtVerify(token, secret)
 
-        if (payload.role === 'CLIENT') {
-            redirect('/')
-        } else {
-            redirect('/admin/users')
-        }
+        return { message: 'Login feito com sucesso', data: payload }
     } catch (error : any) {
         if (isRedirectError(error)) throw error
-        if (error.status === 502) return { erro : "Erro de conexão com o servidor "}
-        return { erro: error.response.data.message }
+        if (error.status === 502) return { message : "Erro de conexão com o servidor ", data: null}
+        return { message: error.response.data.message, data: null}
     }
 }
 
@@ -53,7 +49,8 @@ export async function logoutAction(prevState: unknown) {
     revalidatePath('/', 'layout')
 }
 
-export async function registerClientUser(prevState: unknown, data: UserRegister) {
+export async function registerClientUser(prevState: unknown, data: UserRegister) : Promise<{ message: string, data: JwtPayload | null}> {
+
     try {
         const response = await fetch(`${URL_API_HOTEL}/client`, {
             method: 'POST',
@@ -63,7 +60,7 @@ export async function registerClientUser(prevState: unknown, data: UserRegister)
 
         if (!response.ok) {
             const err = await response.json()
-            return { erro: err.message }
+            return { message: err.message, data: null }
         }
 
         const { token } = await response.json()
@@ -76,11 +73,14 @@ export async function registerClientUser(prevState: unknown, data: UserRegister)
             maxAge: 60 * 60 * 24
         })
 
-        redirect('/')
+        const secret = new TextEncoder().encode(process.env.SECRET_JWT)
 
+        const { payload } = await jwtVerify(token, secret)
+
+        return { message: 'Cliente registrado com sucesso', data: payload }
     } catch ( error : any ) {
-         if (isRedirectError(error)) throw error
-        if (error.status === 502) return { erro : "Erro de conexão com o servidor "}
-        return { erro: error.response.data.message }
+        if (isRedirectError(error)) throw error
+        if (error.status === 502) return { message: "Erro de conexão com o servidor ", data: null}
+        return { message: error.response.data.message, data: null }
     }
 }
