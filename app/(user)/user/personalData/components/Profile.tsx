@@ -4,9 +4,9 @@ import { Client } from "@/types/Client.types";
 import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import FormUploadImage from "./FormUploadImage";
-import useClient from "@/hooks/useClient";
 import { handleToast } from "@/utils/handleToast";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/useUser";
 
 interface ProfileProps {
     client: Client;
@@ -14,7 +14,7 @@ interface ProfileProps {
 
 export default function Profile({ client } : ProfileProps) {
 
-    const { updateProfilePicture } = useClient()
+    const { updateProfilePicture } = useUser()
 
     const router = useRouter()
 

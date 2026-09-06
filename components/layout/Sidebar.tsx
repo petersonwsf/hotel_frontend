@@ -30,8 +30,8 @@ export default function Sidebar() {
                 </nav>
                 <div className="border-t-1 border-gray-400 pt-3">
                     <div className="flex items-center gap-2 cursor-pointer">
-                        <Image src="/images/person.jpg" width={40} height={40} alt="Imagem de perfil" className="rounded-[50%]" />
-                        <span className="text-white">{user?.name as string}</span>
+                        <img alt="Imagem de perfil" className="rounded-[50%] w-7 h-7 object-cover" src={user?.imageKey ? `${process.env.NEXT_PUBLIC_URL_MINIO}/${user.imageKey}` : '/images/icon_person.webp'}/>
+                        <span className="text-white truncate">{user?.name as string}</span>
                         <FaCaretDown className="w-5 h-5 text-white" />
                     </div>
                 </div>
