@@ -3,6 +3,7 @@
 import { handleToast } from "@/utils/handleToast";
 import { useRef, useState, DragEvent, ChangeEvent } from "react"
 import { IoCloseCircle, IoCloudUploadOutline } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface FormUploadImageProps {
     onSubmit: (file: File, id: number) => Promise<void>;
@@ -16,12 +17,16 @@ export default function FormUploadImage({ onSubmit, id } : FormUploadImageProps)
     const [isDragActive, setIsDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = () => {
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const handleSubmit = async () => {
         if (!file) {
             handleToast("Selecione uma imagem de perfil", "error")
             return
         }
-        onSubmit(file, id)
+        setLoading(true)
+        await onSubmit(file, id)
+        setLoading(false)
     }
 
     const handleDrag = (e: DragEvent<HTMLElement>) => {
@@ -120,7 +125,9 @@ export default function FormUploadImage({ onSubmit, id } : FormUploadImageProps)
                 )}
             </label>
             <div className="mt-3 flex justify-end">
-                <button onClick={handleSubmit} className={`text-[#002179] mt-[1rem] border text-white py-[.3rem] bg-[#002179] px-[2rem] cursor-pointer rounded-[7px] font-normal`}>Atualizar foto de perfil</button>
+                <button onClick={handleSubmit} className={`text-[#002179] mt-[1rem] border text-white py-[.3rem] bg-[#002179] px-[2rem] cursor-pointer rounded-[7px] font-normal ${loading ? 'opacity-[.5] pointer-events-none' : ''}`}> 
+                    {loading ? <span className="flex items-center gap-3"><AiOutlineLoading3Quarters className="animate-spin"/> Atualizando</span> : 'Atualizar foto de perfil'}
+                </button>
             </div>
         </div>
     )

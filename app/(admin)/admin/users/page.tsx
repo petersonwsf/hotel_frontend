@@ -1,4 +1,3 @@
-import Pagination from "@/components/ui/Pagination";
 import { listUsers } from "@/lib/api/user";
 import { Suspense } from "react";
 import LoadingUsersTable from "./LoadingTableUsers";
@@ -29,23 +28,10 @@ export default async function Users({ searchParams } : PageProps) {
         <div>
             <HeaderUsersPage />
             <FiltersUsers />
-            <div className="w-full mt-[2rem] rounded-[10px] border-1 border-gray-100 shadow-2xl">
+            <div>
                 <Suspense fallback={<LoadingUsersTable />}>
-                    <TableUsers users={users?.content ?? []} />
+                    <TableUsers users={users?.content ?? []} page={users?.pageable.pageNumber ?? 0} totalPages={users?.totalPages ?? 1} />
                 </Suspense>
-                <div className="flex w-full justify-between py-[1rem] px-[1rem]">
-                    <div className="w-full flex items-center gap-2">
-                        <label htmlFor="rowsPerPage" >Usuários por página</label>
-                        <select name="rowsPerPage" id="rowsPerPage"className="w-[70px] text-center border-1 border-gray-300 rounded-[5px] py-1 outline-none">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                    <div className="w-full flex justify-end">
-                        <Pagination page={users.pageable.pageNumber} totalPages={users.totalPages} />
-                    </div>
-                </div>
             </div>
         </div>
     )

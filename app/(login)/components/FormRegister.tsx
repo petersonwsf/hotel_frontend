@@ -1,12 +1,11 @@
 "use client";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Formik, Form } from "formik";
 import PersonalDataForm from "./PersonalDataForm";
 import { useRouter } from "next/navigation";
 import ContactInformationForm from "./ContactInformationForm";
 import * as Yup from 'yup'
 import useAuth from "@/hooks/useAuth";
-import { handleToast } from "@/utils/handleToast";
 
 const eighteenYearsAgo = new Date();
 eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
@@ -36,13 +35,7 @@ export default function FormRegister() {
     
     const [section, setSection] = useState<FormSection>('PERSONAL')
     
-    const { registerClient, stateRegisterClient, isPendingRegisterClient } = useAuth()
-
-    useEffect(() => {
-        if (stateRegisterClient?.erro) {
-            handleToast(stateRegisterClient.erro, 'error')
-        }
-    }, [stateRegisterClient?.erro])
+    const { registerClient } = useAuth()
     
     const router = useRouter()
 
@@ -69,14 +62,16 @@ export default function FormRegister() {
             validationSchema={validationSchem}
             onSubmit={registerClient}
         >
-            <Form className="w-[80%]">
-                {section === 'PERSONAL'  ? (
-                    <PersonalDataForm setSection={setSection} />
-                ) : (
-                    <ContactInformationForm setSection={setSection} isPending={isPendingRegisterClient} />
-                )}
-                <a onClick={() => router.push("/login")} className="text-[#002BB3] my-2 cursor-pointer">Já possui conta? Faça login</a>
-            </Form>
+            {({ isSubmitting }) => (
+                <Form className="w-[80%]">
+                    {section === 'PERSONAL'  ? (
+                        <PersonalDataForm setSection={setSection} />
+                    ) : (
+                        <ContactInformationForm setSection={setSection} isPending={isSubmitting} />
+                    )}
+                    <a onClick={() => router.push("/login")} className="text-[#002BB3] my-2 cursor-pointer">Já possui conta? Faça login</a>
+                </Form>
+            )}
         </Formik>
     )
 }
