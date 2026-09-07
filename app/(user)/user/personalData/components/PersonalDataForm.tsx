@@ -1,18 +1,17 @@
 "use client"
 import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
-import { Client } from '@/types/Client.types'
+import { Client, ClientUpdate } from '@/types/Client.types'
 import InputText from '@/components/form/InputText';
-
 import { MdOutlineEmail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineIdentification } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
 import { validateCPF } from '@/utils/validateCPF';
-import useClient from '@/hooks/useClient';
 
 interface PersonalDataForm {
     client: Client;
+    onSubmit: (values: ClientUpdate) => void;
 }
 
 const eighteenYearsAgo = new Date();
@@ -26,9 +25,7 @@ const validationSchema = Yup.object({
     dateOfBirth: Yup.date().max(eighteenYearsAgo, 'Você deve ter no mínimo 18 anos').required('Data de nascimento é obrigatória'),
 })
 
-export default function PersonalDataform({ client } : PersonalDataForm) {
-
-    const { updateClient } = useClient()
+export default function PersonalDataform({ client, onSubmit } : PersonalDataForm) {
 
     return (
         <div className='w-full mt-[2rem] rounded-lg border-1 border-gray-300 p-[2rem]'>
@@ -41,7 +38,7 @@ export default function PersonalDataform({ client } : PersonalDataForm) {
                     dateOfBirth: client.dateOfBirth ?? '',
                     phoneNumber: client.contactInformation.phoneNumber ?? ''
                 }}
-                onSubmit={(values) => updateClient(client.id, values)}
+                onSubmit={(values) => onSubmit(values)}
             >
                 {({ isSubmitting }) => (
                     <Form>

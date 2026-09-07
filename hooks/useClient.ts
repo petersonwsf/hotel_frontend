@@ -44,8 +44,19 @@ export default function useClient() {
         }
     }
 
+    async function deleteClient(id: number) {
+        try {
+            await api.delete(`/hotel/client/${id}`)
+            router.refresh()
+            handleToast("Cliente excluído com sucesso", "success")
+        } catch (error : any) {
+            handleToast(error.response.data.message, "error")
+        }
+    }
+
     return {
         updateClient,
         updateAddress,
+        deleteClient,
     }
 }

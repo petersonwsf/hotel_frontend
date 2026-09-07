@@ -3,7 +3,7 @@ import { getClientByUserId } from "@/lib/api/client";
 import { Client } from "@/types/Client.types";
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import AddressForm from "./components/AddressForm";
+import ContainerAddressForm from "./components/ContainerAddressForm";
 
 export default async function AddressPage() {
 
@@ -25,7 +25,7 @@ export default async function AddressPage() {
         <div className="w-full">
             <h2 className="font-[650] text-[#002179] text-4xl">Meu endereço</h2>
             <p className="font-light text-gray-500 text-lg my-2">Atualize suas informações de endereço</p>
-            <AddressForm id={client.id} address={client.contactInformation} />
+            <ContainerAddressForm client={client} />
         </div>
     )
 }
