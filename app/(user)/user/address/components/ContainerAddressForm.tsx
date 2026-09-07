@@ -18,9 +18,8 @@ export default function ContainerAddressForm({ client } : ContainerAddressFormPr
     return (
         <div className="py-[1rem] w-full">
             <div className="rounded-xl overflow-hidden border-1 border-gray-300">
-                <div className="w-full bg-[#002179] py-[1rem] px-[3rem]">
-                    <AddressForm address={client.contactInformation} onSubmit={handleEditAddress} />
-                </div>
+                <div className="w-full bg-[#002179] py-[1rem] px-[3rem]"></div>
+                <AddressForm address={client.contactInformation} onSubmit={handleEditAddress} />
             </div>
         </div>
     )
