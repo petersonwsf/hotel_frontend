@@ -1,3 +1,15 @@
+import { User } from "./User.types";
+
+export interface ClientQueryParams {
+    page: string | string[];
+    size: string | string[];
+    name?: string | string[];
+    pin?: string | string[];
+    email?: string | string[];
+    phoneNumber?: string | string[];
+    deleted?: boolean;
+}
+
 export interface ClientUpdate {
     id?: number,
     name?: string;
@@ -18,6 +30,16 @@ export interface ContactInformationUpdate {
     street?: string;
 }
 
+export interface ClientList {
+    id: number,
+    name: string;
+    email: string;
+    pin: string;
+    dateOfBirth: string | Date;
+    contactInformation : ContactInformation;
+    user: User;
+}
+
 export interface Client {
     id: number,
     name: string;
@@ -26,7 +48,7 @@ export interface Client {
     email: string;
     dateOfBirth: string | Date;
     contactInformation : ContactInformation;
-    imageKey: string;
+    imageKey?: string;
 }
 
 export interface ContactInformation {
